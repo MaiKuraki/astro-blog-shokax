@@ -1,5 +1,5 @@
 ---
-import NavBar from '../components/navbar/NavBar.vue'
+import NavBar from '../components/navbar/NavBar.svelte'
 
 import themeConfig from '../theme.config.ts'
 
@@ -20,7 +20,7 @@ const siteName = themeConfig.siteName
     <title>Astro Basics</title>
   </head>
   <body>
-    <NavBar client:only="vue" name={siteName} navLinks={navLinks} clickToggleCallback={() => void 0} />
+    <NavBar client:load name={siteName} navLinks={navLinks} clickToggleCallback={() => void 0} />
     <main class="mt-12.5">
       <slot />
     </main>
