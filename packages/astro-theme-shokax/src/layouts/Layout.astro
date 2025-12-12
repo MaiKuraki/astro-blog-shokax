@@ -55,27 +55,25 @@ const posts = allPosts.filter((post) => !post.data.draft)
         <div class="inner">
           <div id="main" class="pjax">
             <slot />
+            <footer id="footer">
+              <div class="inner">
+                <div class="widgets">
+                  <Widgets
+                    client:visible
+                    posts={posts}
+                    enableRandomPosts={widgetsConfig.randomPosts !== false}
+                    enableRecentComments={widgetsConfig.recentComments !== false}
+                  />
+                </div>
+                <Footer config={footerConfig} siteName={siteName} author={sidebarConfig.author} />
+              </div>
+            </footer>
           </div>
-          <div id="sidebar">
+          <div id="sidebar" class="mt-12">
             <Sidebar client:load config={sidebarConfig} navLinks={navLinks} />
           </div>
-          <div class="dimmer"></div>
         </div>
-        <div id="player"></div>
       </main>
-      <footer id="footer">
-        <div class="inner">
-          <div class="widgets">
-            <Widgets
-              client:visible
-              posts={posts}
-              enableRandomPosts={widgetsConfig.randomPosts !== false}
-              enableRecentComments={widgetsConfig.recentComments !== false}
-            />
-          </div>
-          <Footer config={footerConfig} siteName={siteName} author={sidebarConfig.author} />
-        </div>
-      </footer>
     </div>
   </body>
 </html>

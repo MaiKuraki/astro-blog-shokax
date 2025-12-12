@@ -91,7 +91,7 @@
     background: var(--grey-0);
     box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .segment-item:hover {

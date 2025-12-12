@@ -161,12 +161,13 @@
   #sidebar {
     position: fixed;
     left: 0;
-    top: 3.125rem;
+    top: 0;
+    height: 100%;
+    padding-top: 3.125rem;
     bottom: 0;
     z-index: 8;
     width: 300px;
     max-width: 85vw;
-    height: calc(100vh - 3.125rem);
     overflow-y: auto;
     background: var(--grey-0);
     box-shadow: 0.25rem 0 1rem rgba(0, 0, 0, 0.3);
