@@ -1,0 +1,78 @@
+---
+interface NavPost {
+  title: string
+  slug: string
+  category?: string
+  cover?: string
+}
+
+interface Props {
+  prevPost?: NavPost
+  nextPost?: NavPost
+  enableGradientCover?: boolean
+}
+
+const { prevPost, nextPost, enableGradientCover = false } = Astro.props
+
+// Generate random bright colors for gradient
+function generateRandomBrightColor(): string {
+  const hue = Math.floor(Math.random() * 360)
+  return `hsl(${hue}, 70%, 60%)`
+}
+---
+
+<div class="post-nav">
+  <div class="item left">
+    {
+      prevPost && (
+        <a
+          href={`/posts/${prevPost.slug}`}
+          itemprop="url"
+          rel="prev"
+          title={prevPost.title}
+          style={
+            enableGradientCover
+              ? `background-image: linear-gradient(to bottom right, ${generateRandomBrightColor()}, ${generateRandomBrightColor()});`
+              : `background-image: url(${prevPost.cover || '/default-cover.jpg'});`
+          }
+        >
+          <span class="type">上一篇</span>
+          {prevPost.category && (
+            <span class="category">
+              <i class="ic i-ri-flag-line" />
+              {prevPost.category}
+            </span>
+          )}
+          <h3>{prevPost.title}</h3>
+        </a>
+      )
+    }
+  </div>
+
+  <div class="item right">
+    {
+      nextPost && (
+        <a
+          href={`/posts/${nextPost.slug}`}
+          itemprop="url"
+          rel="next"
+          title={nextPost.title}
+          style={
+            enableGradientCover
+              ? `background-image: linear-gradient(to bottom right, ${generateRandomBrightColor()}, ${generateRandomBrightColor()});`
+              : `background-image: url(${nextPost.cover || '/default-cover.jpg'});`
+          }
+        >
+          <span class="type">下一篇</span>
+          {nextPost.category && (
+            <span class="category">
+              <i class="ic i-ri-flag-line" />
+              {nextPost.category}
+            </span>
+          )}
+          <h3>{nextPost.title}</h3>
+        </a>
+      )
+    }
+  </div>
+</div>

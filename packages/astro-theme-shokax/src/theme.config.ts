@@ -13,6 +13,7 @@ interface CoverConfig {
   fixedCover?: string
   gradient?: boolean
   covers?: string[]
+  enableNextGradientCover?: boolean
 }
 
 interface FooterConfig {
@@ -98,6 +99,7 @@ export default defineConfig({
     enablePreload: true,
     // fixedCover: '/path/to/cover.jpg', // 固定封面模式
     // gradient: true, // 渐变模式
+    enableNextGradientCover: false, // 文章导航使用渐变背景
     covers: [
       'https://picsum.photos/1920/1080?random=1',
       'https://picsum.photos/1920/1080?random=2',

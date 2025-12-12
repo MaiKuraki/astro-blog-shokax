@@ -12,11 +12,13 @@ const posts = defineCollection({
     date: z.date().refine(date => !Number.isNaN(date), {
       message: 'Invalid date format',
     }),
+    updated: z.date().optional(),
     tags: z.array(z.string()).optional(),
     categories: z.array(z.string()).optional(),
     draft: z.boolean().optional(),
     cover: z.string().optional(),
     sticky: z.boolean().optional(),
+    link: z.string().optional(),
   }),
 })
 

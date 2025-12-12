@@ -1,0 +1,321 @@
+/* Post Page Styles - Migrated from hexo-theme-shokaX */
+
+/* Post Block */
+.post.block {
+  padding: 0 2rem;
+}
+
+/* Post Content */
+.md {
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.md .exturl .ic {
+  font-size: 0.875rem;
+  margin-left: 0.25rem;
+}
+
+.md .button {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  display: inline-flex;
+  font-size: 0.875rem;
+  align-items: center;
+  margin: 1.25rem 0;
+  flex-wrap: wrap;
+}
+
+.breadcrumb .ic {
+  margin: 0 0.125rem;
+  color: var(--grey-4);
+}
+
+.breadcrumb .ic:nth-child(1) {
+  margin-left: 0;
+  margin-right: 0.3125rem;
+}
+
+.breadcrumb span {
+  white-space: pre;
+}
+
+.breadcrumb span.current {
+  background-color: var(--color-red-a1);
+  border-radius: 0.625rem;
+  padding: 0 0.625rem;
+  transition: all 0.3s ease;
+}
+
+.breadcrumb span.current span {
+  white-space: normal;
+}
+
+.breadcrumb span.current a {
+  color: var(--primary-color);
+}
+
+.breadcrumb span.current:hover {
+  background-color: var(--color-red-a3);
+}
+
+/* Post Header */
+.post header {
+  font-size: 1.125rem;
+  margin-bottom: 0.625rem;
+}
+
+.post header .title {
+  font-size: 1.75rem;
+  margin: initial;
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  padding-bottom: 0.625rem;
+}
+
+.post header .link {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+}
+
+.post header .link .i-link-alt {
+  font-size: 0.875rem;
+  margin-left: 0.3125rem;
+}
+
+.post header .meta {
+  text-align: center;
+  border-top: 0.0625rem dashed var(--grey-9-a1);
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+}
+
+/* Post Meta */
+.post .meta {
+  color: var(--grey-5);
+  font-size: 0.75rem;
+  text-align: right;
+}
+
+.post .meta .item {
+  display: inline-block;
+  margin-right: 0.625rem;
+}
+
+.post .meta .icon {
+  margin-right: 0.1875rem;
+}
+
+@media screen and (max-width: 768px) {
+  .post .meta .icon {
+    display: inline-block;
+  }
+}
+
+/* Post Tags */
+.post .tags {
+  text-align: left;
+  margin-top: 0.625rem;
+  font-size: 0.75rem;
+}
+
+.post .tags a {
+  display: inline-block;
+  position: relative;
+  padding: 0 0.3125rem;
+  border-radius: 0.3125rem;
+  background: var(--note-bg);
+  color: var(--note-text);
+}
+
+.post .tags a:not(:last-child) {
+  margin-right: 0.625rem;
+}
+
+.post .tags a:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  width: 0;
+  right: 0;
+  background: var(--color-red-a1);
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.post .tags a:hover {
+  color: var(--primary-color);
+}
+
+.post .tags a:hover:before {
+  width: 104%;
+  left: -2%;
+}
+
+/* Post Footer */
+.post footer::before {
+  content: '';
+  width: 100%;
+  height: 0.0625rem;
+  background: var(--grey-3);
+  display: block;
+  margin: 1.25rem auto 0;
+}
+
+/* Copyright */
+#copyright {
+  background: var(--grey-2);
+  padding: 1rem 2rem;
+  position: relative;
+  font-size: 0.75rem;
+  border-radius: 0.625rem;
+  color: var(--grey-6);
+}
+
+#copyright li::before {
+  font-family: 'iconfont';
+  color: var(--grey-5);
+  margin-right: 0.3125rem;
+  font-size: 1.1rem;
+  line-height: 0.75rem;
+  vertical-align: -0.0667rem;
+}
+
+#copyright .author::before {
+  content: '\e900';
+}
+
+#copyright .link::before {
+  content: '\e901';
+}
+
+#copyright .license::before {
+  content: '\e902';
+}
+
+/* Reward */
+.reward {
+  margin: 1.25rem auto;
+  padding: 0.625rem 0;
+  text-align: center;
+}
+
+.reward button {
+  background: var(--primary-color);
+  border: 0;
+  border-radius: 0.3125rem;
+  color: var(--grey-0);
+  cursor: pointer;
+  line-height: 2;
+  outline: 0;
+  padding: 0 0.9375rem;
+  vertical-align: text-top;
+}
+
+.reward button:hover {
+  background: var(--primary-color);
+}
+
+.reward button i {
+  margin-right: 0.3125rem;
+}
+
+.reward p {
+  font-size: 0.875rem;
+  color: var(--grey-5);
+  margin: 0;
+}
+
+#qr {
+  padding-top: 1.25rem;
+  display: none;
+}
+
+#qr a {
+  border: 0;
+}
+
+#qr img {
+  display: inline-block;
+  max-width: 100%;
+}
+
+#qr p {
+  text-align: center;
+}
+
+/* Post Navigation */
+.post-nav {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .post-nav {
+    flex-direction: column;
+  }
+}
+
+.post-nav .item {
+  width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+  .post-nav .item {
+    width: 100%;
+  }
+}
+
+.post-nav .item a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: var(--header-text-color);
+  padding: 1.25rem 2.5rem;
+  background-size: cover;
+  position: relative;
+  transform: scale(1);
+}
+
+.post-nav .item a::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #434343, #000);
+  opacity: 0.5;
+  transition: all 0.3s ease;
+  z-index: -1;
+  top: 0;
+  left: 0;
+}
+
+.post-nav .item a:hover::before {
+  opacity: 0.4;
+}
+
+.post-nav .item span {
+  font-size: 0.875rem;
+}
+
+.post-nav .item.left span,
+.post-nav .item.left h3 {
+  align-self: flex-start;
+}
+
+.post-nav .item.right span,
+.post-nav .item.right h3 {
+  align-self: flex-end;
+  text-align: right;
+}

@@ -61,6 +61,16 @@ const commonSidebarIcons = [
   'i-ri-pencil-line',
   'i-ri-time-line',
   'i-ri-flag-line',
+  // Post page icons
+  'i-ri-home-fill',
+  'i-ri-arrow-right-s-line',
+  'i-ri-edit-2-line',
+  'i-ri-calendar-check-line',
+  'i-ri-heart-pulse-line',
+  'i-ri-at-line',
+  'i-ri-creative-commons-line',
+  'i-ri-price-tag-3-line',
+  'i-ri-link',
 ]
 
 export default defineConfig({

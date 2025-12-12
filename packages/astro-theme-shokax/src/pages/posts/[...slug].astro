@@ -1,0 +1,119 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import Breadcrumb from '@/components/post/Breadcrumb.astro'
+import PostHeader from '@/components/post/PostHeader.astro'
+import PostFooter from '@/components/post/PostFooter.astro'
+import PostNav from '@/components/post/PostNav.astro'
+import { getCollection, render } from 'astro:content'
+import themeConfig from '@/theme.config'
+
+import '@/styles/post.css'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts')
+  const sortedPosts = posts
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+
+  return sortedPosts.map((post, index) => {
+    const prevPost = index > 0 ? sortedPosts[index - 1] : undefined
+    const nextPost = index < sortedPosts.length - 1 ? sortedPosts[index + 1] : undefined
+
+    return {
+      params: { slug: post.id },
+      props: {
+        post,
+        prevPost: prevPost
+          ? {
+              title: prevPost.data.title,
+              slug: prevPost.id,
+              category: prevPost.data.categories?.[0],
+              cover: prevPost.data.cover,
+            }
+          : undefined,
+        nextPost: nextPost
+          ? {
+              title: nextPost.data.title,
+              slug: nextPost.id,
+              category: nextPost.data.categories?.[0],
+              cover: nextPost.data.cover,
+            }
+          : undefined,
+      },
+    }
+  })
+}
+
+const { post, prevPost, nextPost } = Astro.props
+const { Content } = await render(post)
+
+// Calculate word count from content
+const plainText = (post.body || '').replace(/[#*`_\[\]()]/g, '').replace(/\s+/g, ' ')
+const wordCount = plainText.length
+
+// Get site info from config
+const siteConfig = themeConfig.sidebar || {}
+const author = siteConfig.author || 'Author'
+const siteName = themeConfig.siteName || 'Site'
+
+// Build permalink
+const permalink = `${Astro.site?.toString() || 'https://example.com'}posts/${post.id}`
+---
+
+<Layout>
+  <div class="article wrap">
+    <Breadcrumb categories={post.data.categories} />
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" data-pagefind-body lang="zh-CN">
+      <link itemprop="mainEntityOfPage" href={permalink} />
+
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="image" content={siteConfig.avatar || '/avatar.jpg'} />
+        <meta itemprop="name" content={author} />
+        <meta itemprop="description" content={`${siteName}`} />
+      </span>
+
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content={siteName} />
+      </span>
+
+      <PostHeader
+        title={post.data.title}
+        link={post.data.link}
+        date={post.data.date}
+        updated={post.data.updated}
+        wordCount={wordCount}
+      />
+
+      <div class="body md" itemprop="articleBody">
+        <Content />
+
+        {
+          post.data.tags && post.data.tags.length > 0 && (
+            <div class="tags">
+              {post.data.tags.map((tag) => (
+                <a href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`} rel="tag">
+                  <i class="ic i-ri-price-tag-3-line" />
+                  {tag}
+                </a>
+              ))}
+            </div>
+          )
+        }
+      </div>
+
+      <PostFooter
+        date={post.data.date}
+        updated={post.data.updated}
+        permalink={permalink}
+        title={post.data.title}
+        author={author}
+        siteName={siteName}
+        showCopyright={true}
+        showReward={false}
+      />
+    </article>
+  </div>
+
+  <PostNav prevPost={prevPost} nextPost={nextPost} enableGradientCover={themeConfig.cover?.enableNextGradientCover} />
+</Layout>
