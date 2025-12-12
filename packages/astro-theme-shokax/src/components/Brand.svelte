@@ -5,7 +5,11 @@
     title = '',
     subtitle = '',
     logo = '',
+    pageTitle = '',
   } = $props()
+
+  // Use pageTitle if provided (for non-index pages), otherwise use title from config
+  const displayTitle = $derived(pageTitle || title)
 
   let isAffix = $state(false)
 
@@ -34,9 +38,9 @@
       </div>
     {/if}
 
-    {#if title}
+    {#if displayTitle}
       <h1 class='letter-space-2 text-5xl leading-tight tracking-wider font-600'>
-        {title}
+        {displayTitle}
       </h1>
     {/if}
 

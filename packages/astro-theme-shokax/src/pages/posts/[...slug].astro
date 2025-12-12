@@ -22,17 +22,18 @@ export async function getStaticPaths() {
 
     // Get related posts from the same category
     const categories = post.data.categories || []
-    const relatedPosts = categories.length > 0
-      ? sortedPosts
-          .filter(p => p.id !== post.id && p.data.categories?.some(c => categories.includes(c)))
-          .slice(0, 10)
-          .map(p => ({
-            slug: p.id,
-            title: p.data.title,
-            date: p.data.date,
-            category: p.data.categories?.[0],
-          }))
-      : []
+    const relatedPosts =
+      categories.length > 0
+        ? sortedPosts
+            .filter((p) => p.id !== post.id && p.data.categories?.some((c) => categories.includes(c)))
+            .slice(0, 10)
+            .map((p) => ({
+              slug: p.id,
+              title: p.data.title,
+              date: p.data.date,
+              category: p.data.categories?.[0],
+            }))
+        : []
 
     return {
       params: { slug: post.id },
@@ -64,7 +65,7 @@ const { post, prevPost, nextPost, relatedPosts } = Astro.props
 const { Content, headings } = await render(post)
 
 // Build TOC from headings
-const toc: TocItem[] = headings.map(h => ({
+const toc: TocItem[] = headings.map((h) => ({
   id: h.slug,
   text: h.text,
   level: h.depth,
@@ -91,7 +92,7 @@ const siteName = themeConfig.siteName || 'Site'
 const permalink = `${Astro.site?.toString() || 'https://example.com'}posts/${post.id}`
 ---
 
-<Layout toc={toc} relatedPosts={relatedPosts} currentSlug={post.id} navigation={navigation}>
+<Layout toc={toc} relatedPosts={relatedPosts} currentSlug={post.id} navigation={navigation} pageTitle={post.data.title}>
   <div class="article wrap">
     <Breadcrumb categories={post.data.categories} />
 

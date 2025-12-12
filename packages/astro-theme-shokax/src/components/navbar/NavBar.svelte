@@ -1,7 +1,6 @@
 <script lang='ts'>
   import type { NavItemType } from './NavTypes'
   import { onMount } from 'svelte'
-  import { fly } from 'svelte/transition'
   import { initTheme, toggleTheme } from './helpers/theme'
   import LeftNavBtn from './LeftNavBtn.svelte'
   import MenuBar from './MenuBar.svelte'
@@ -71,7 +70,7 @@
 </script>
 
 <!-- 占位容器，避免导航栏出现/消失时的CLS -->
-<div class='h-12.5 w-full' style="content-visibility: auto;"></div>
+<div class='h-12.5 w-full' style='content-visibility: auto;'></div>
 
 <nav
   id='nav'
@@ -82,10 +81,10 @@
     <LeftNavBtn clickCallback={clickToggleCallback} />
     <MenuBar {name} navLinks={navLinks} />
     <RightNavBar>
-      <button type='button' class='text-5 pb-2.5 pl-2 pr-2 pt-2.5 cursor-pointer border-none bg-transparent' onclick={handleToggleTheme} aria-label='Toggle theme'>
+      <button type='button' class='text-5 pb-2.5 pl-2 pr-2 pt-2.5 border-none bg-transparent cursor-pointer' onclick={handleToggleTheme} aria-label='Toggle theme'>
         <div class={isDark ? 'i-ri-moon-line' : 'i-ri-sun-line'}></div>
       </button>
-      <button type='button' id='search' class='text-5 pb-2.5 pl-2 pr-2 pt-2.5 cursor-pointer border-none bg-transparent' onclick={handleSearch} aria-label='Search'>
+      <button type='button' id='search' class='text-5 pb-2.5 pl-2 pr-2 pt-2.5 border-none bg-transparent cursor-pointer' onclick={handleSearch} aria-label='Search'>
         <div class='i-ri-search-line'></div>
       </button>
     </RightNavBar>

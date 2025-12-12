@@ -59,7 +59,7 @@ function getLastCategory(categories: string[]): string | undefined {
 }
 ---
 
-<Layout>
+<Layout pageTitle={tag}>
   <div class="wrap">
     <div class="timeline">
       <h2 class="item header">
@@ -76,10 +76,7 @@ function getLastCategory(categories: string[]): string | undefined {
           return (
             <article class="item normal" itemscope itemtype="http://schema.org/Article">
               <div class="meta">
-                <time
-                  itemprop="dateCreated"
-                  datetime={post.data.date.toISOString()}
-                >
+                <time itemprop="dateCreated" datetime={post.data.date.toISOString()}>
                   {formatDate(post.data.date)}
                 </time>
               </div>

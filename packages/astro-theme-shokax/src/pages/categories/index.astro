@@ -71,43 +71,43 @@ function getCategoryUrl(name: string): string {
 type CategoryWithChildren = Category & { children?: CategoryWithChildren[] }
 ---
 
-<Layout>
+<Layout pageTitle="全部分类">
   <div class="wrap">
     <div class="timeline">
       {
         hierarchicalCategories.map((cat: CategoryWithChildren) => (
-        <div>
-          <h2 class="item header">
-            <a href={getCategoryUrl(cat.name)} itemprop="url">
-              {cat.name}
-            </a>
-            <small>( {cat.length} )</small>
-          </h2>
+          <div>
+            <h2 class="item header">
+              <a href={getCategoryUrl(cat.name)} itemprop="url">
+                {cat.name}
+              </a>
+              <small>( {cat.length} )</small>
+            </h2>
 
-          {cat.children &&
-            cat.children.map((child: CategoryWithChildren) => (
-              <>
-                <h3 class="item section">
-                  <a href={getCategoryUrl(child.name)} itemprop="url">
-                    {child.name}
-                  </a>
-                  <small>( {child.length} )</small>
-                </h3>
+            {cat.children &&
+              cat.children.map((child: CategoryWithChildren) => (
+                <>
+                  <h3 class="item section">
+                    <a href={getCategoryUrl(child.name)} itemprop="url">
+                      {child.name}
+                    </a>
+                    <small>( {child.length} )</small>
+                  </h3>
 
-                {child.children &&
-                  child.children.map((grandchild: CategoryWithChildren) => (
-                    <div class="item normal">
-                      <div class="title">
-                        <a href={getCategoryUrl(grandchild.name)} itemprop="url">
-                          {grandchild.name}
-                        </a>
-                        <small>( {grandchild.length} )</small>
+                  {child.children &&
+                    child.children.map((grandchild: CategoryWithChildren) => (
+                      <div class="item normal">
+                        <div class="title">
+                          <a href={getCategoryUrl(grandchild.name)} itemprop="url">
+                            {grandchild.name}
+                          </a>
+                          <small>( {grandchild.length} )</small>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-              </>
-            ))}
-        </div>
+                    ))}
+                </>
+              ))}
+          </div>
         ))
       }
 

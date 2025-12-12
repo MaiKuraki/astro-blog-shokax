@@ -14,7 +14,7 @@
     title = '',
     isActive = false,
     class: className = '',
-    children
+    children,
   }: Props = $props()
 </script>
 

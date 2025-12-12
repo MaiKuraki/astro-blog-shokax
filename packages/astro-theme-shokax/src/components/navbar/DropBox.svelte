@@ -65,10 +65,10 @@
     type='button'
     aria-haspopup='true'
     aria-expanded={hovering}
-    onclick={(e) => e.preventDefault()}
+    onclick={e => e.preventDefault()}
     onmouseenter={() => setLinkHover(true)}
     onmouseleave={() => setLinkHover(false)}
-    class='inline-block bg-transparent border-none cursor-pointer text-inherit font-inherit'
+    class='text-inherit font-inherit border-none bg-transparent inline-block cursor-pointer'
   >
     {#if icon}
       <div class={iconClasses}></div>

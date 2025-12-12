@@ -22,9 +22,10 @@ interface Props {
   relatedPosts?: RelatedPost[]
   currentSlug?: string
   navigation?: QuickNavigation
+  pageTitle?: string
 }
 
-const { toc = [], relatedPosts = [], currentSlug = '', navigation = {} } = Astro.props
+const { toc = [], relatedPosts = [], currentSlug = '', navigation = {}, pageTitle = '' } = Astro.props
 
 const navLinks = themeConfig.nav
 const siteName = themeConfig.siteName
@@ -60,7 +61,13 @@ const posts = allPosts.filter((post) => !post.data.draft)
         title={brandConfig.title}
       />
       <NavBar client:load name={siteName} navLinks={navLinks} clickToggleCallback={() => void 0} />
-      <Brand client:load title={brandConfig.title} subtitle={brandConfig.subtitle} logo={brandConfig.logo} />
+      <Brand
+        client:load
+        title={brandConfig.title}
+        subtitle={brandConfig.subtitle}
+        logo={brandConfig.logo}
+        pageTitle={pageTitle}
+      />
       <Waves client:load />
       <main>
         <div class="inner">
