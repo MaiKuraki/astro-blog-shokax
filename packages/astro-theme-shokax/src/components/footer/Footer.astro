@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
 
 interface Props {
@@ -125,7 +124,7 @@ const iconColor = config.icon?.color || '#ffc0cb'
                   href={`https://beian.mps.gov.cn/#/query/webSearch?code=${config.icp.recordcode}`}
                   class="inline-block text-grey-5 hover:opacity-80 border-b border-dashed"
                 >
-                  {config.icp.icon && <Image src={config.icp.icon} alt="ICP" class="max-w-8 inline align-middle" />}
+                  {config.icp.icon && <img src={config.icp.icon} alt="ICP" class="max-w-8 inline align-middle" />}
                   {config.icp.beian}
                 </a>
               </>

@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
 
 interface Props {
@@ -16,7 +15,7 @@ const lastCategory = post.data.categories?.[post.data.categories.length - 1]
   <div class="cover">
     {
       post.data.cover && (
-        <Image src={post.data.cover} alt={post.data.title} loading="lazy" decoding="async" class="cover-image" />
+        <img src={post.data.cover} alt={post.data.title} loading="lazy" decoding="async" class="cover-image" />
       )
     }
     <div class="cover-overlay"></div>
