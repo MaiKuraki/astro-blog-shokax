@@ -1,41 +1,51 @@
 ---
-import Layout from '../../layouts/Layout.astro'
+import Layout from '../../../layouts/Layout.astro'
 import { getCollection } from 'astro:content'
-import { structurePostsByDate, fmtNum } from 'shokax-toolkit-lib'
-import '../../styles/collapse.css'
+import { structurePostsByDate } from '@/toolkit/posts/structurePostsByDate'
+import { fmtNum } from '@/toolkit/tools/fmtNum'
+import '../../../styles/collapse.css'
 
-// Get all published posts sorted by date
-const allPosts = await getCollection('posts')
-const publishedPosts = allPosts
-  .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+export async function getStaticPaths() {
+  const allPosts = await getCollection('posts')
+  const publishedPosts = allPosts
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
 
-// Structure posts by date
-const structuredPosts = structurePostsByDate(
-  publishedPosts.map((post) => ({
-    _id: post.id,
-    title: post.data.title,
-    content: '',
-    date: post.data.date,
-    categories: post.data.categories || [],
-    link: post.data.link,
-  })),
-  { daily: false },
-)
+  const structuredPosts = structurePostsByDate(
+    publishedPosts.map((post) => ({
+      _id: post.id,
+      title: post.data.title,
+      content: '',
+      date: post.data.date,
+      categories: post.data.categories || [],
+      link: post.data.link,
+    })),
+    { daily: false },
+  )
 
-// Get all years in descending order
-const years = Object.keys(structuredPosts)
-  .map(Number)
-  .sort((a, b) => b - a)
+  const years = Object.keys(structuredPosts).map(Number)
 
-// Total post count for cheers message
-const totalPosts = publishedPosts.length
-let cheers = 'um'
-if (totalPosts > 210) cheers = 'excellent'
-else if (totalPosts > 130) cheers = 'great'
-else if (totalPosts > 80) cheers = 'good'
-else if (totalPosts > 50) cheers = 'nice'
-else if (totalPosts > 30) cheers = 'ok'
+  return years.map((year) => ({
+    params: { year: String(year) },
+    props: {
+      year,
+      posts: structuredPosts[year][0],
+      allYears: years.sort((a, b) => b - a),
+    },
+  }))
+}
+
+const { year, posts } = Astro.props as {
+  year: number
+  posts: {
+    _id: string
+    title: string
+    content: string
+    date: Date
+    categories: string[]
+    link?: string
+  }[]
+}
 
 // Helper to get category URL
 function getCategoryUrl(category: string): string {
@@ -50,56 +60,39 @@ function formatDate(date: Date): string {
 }
 ---
 
-<Layout pageTitle="归档">
+<Layout pageTitle={`${year} 年归档`}>
   <div class="wrap">
     <div class="timeline">
       <h2 class="item header">
-        <a href="/">首页</a>
+        <a href="/archives">全部</a>
         <small>/</small>
-        目前共计 {totalPosts} 篇文章。
-        <small class="cheers"
-          >{
-            cheers === 'excellent'
-              ? '太棒了'
-              : cheers === 'great'
-                ? '非常好'
-                : cheers === 'good'
-                  ? '很好'
-                  : cheers === 'nice'
-                    ? '不错'
-                    : cheers === 'ok'
-                      ? '还行'
-                      : '嗯..'
-          } 继续努力。</small
-        >
+        {year} 年
+        <small>归档</small>
       </h2>
 
       {
-        years.map((year) => {
-          const yearPosts = structuredPosts[year][0]
+        (() => {
           let lastMonth = 0
           let monthPostCount = 0
 
-          return yearPosts.map((post, index) => {
+          return posts.map((post, index) => {
             const postDate = post.date
             const month = postDate.getMonth() + 1
             const isNewMonth = month !== lastMonth
 
             // Count posts in this month
             if (isNewMonth) {
-              monthPostCount = yearPosts.filter((p) => p.date.getMonth() + 1 === month).length
+              monthPostCount = posts.filter((p) => p.date.getMonth() + 1 === month).length
               lastMonth = month
             }
 
-            const prevPost = index > 0 ? yearPosts[index - 1] : null
+            const prevPost = index > 0 ? posts[index - 1] : null
             const prevMonth = prevPost ? prevPost.date.getMonth() + 1 : 0
 
             return (
               <>
                 {(index === 0 || month !== prevMonth) && (
                   <h3 class="item section">
-                    <a href={`/archives/${year}`}>{year} 年</a>
-                    <small>/</small>
                     <a href={`/archives/${year}/${fmtNum(month)}`}>{month} 月</a>
                     <small>({monthPostCount})</small>
                   </h3>
@@ -142,7 +135,7 @@ function formatDate(date: Date): string {
               </>
             )
           })
-        })
+        })()
       }
     </div>
   </div>

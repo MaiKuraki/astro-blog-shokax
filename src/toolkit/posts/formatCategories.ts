@@ -1,4 +1,12 @@
-import type { Category } from './types'
+import type { Post } from './types'
+
+export interface Category {
+  _id: string
+  name: string
+  parent?: string
+  posts: Post[]
+  length: number
+}
 
 interface FormatCategoriesOptions {
   depth?: number

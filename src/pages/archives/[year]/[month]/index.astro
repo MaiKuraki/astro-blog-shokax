@@ -1,7 +1,8 @@
 ---
 import Layout from '../../../../layouts/Layout.astro'
 import { getCollection } from 'astro:content'
-import { structurePostsByDate, fmtNum } from 'shokax-toolkit-lib'
+import { structurePostsByDate } from '@/toolkit/posts/structurePostsByDate'
+import { fmtNum } from '@/toolkit/tools/fmtNum'
 import '../../../../styles/collapse.css'
 
 export async function getStaticPaths() {
