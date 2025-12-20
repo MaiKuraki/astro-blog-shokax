@@ -95,7 +95,7 @@ const transformedPosts = transformPosts(posts)
       <>
         {isFirstPage && <Divider title="最新文章" />}
         <div class="segments posts">
-          <PostSegments posts={transformedPosts} client:load />
+          <PostSegments posts={transformedPosts} client:visible />
         </div>
       </>
     ) : (

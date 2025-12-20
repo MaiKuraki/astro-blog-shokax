@@ -2,6 +2,7 @@ import svelte from '@astrojs/svelte'
 
 // @ts-check
 import { defineConfig } from 'astro/config'
+import esToolkitPlugin from 'vite-plugin-es-toolkit';
 
 import UnoCSS from 'unocss/astro'
 
@@ -17,5 +18,8 @@ export default defineConfig({
         '@': new URL('./src', import.meta.url),
       },
     },
+    plugins: [
+      esToolkitPlugin()
+    ]
   },
 })
