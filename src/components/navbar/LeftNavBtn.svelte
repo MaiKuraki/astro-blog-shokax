@@ -15,9 +15,9 @@
 
 <button class='border-none bg-transparent flex flex-col cursor-pointer items-center justify-center lg:hidden' onclick={handleToggle} aria-label='Toggle sidebar' type='button'>
   <div class='line-height-0 p-5 w-5.5 box-unset'>
-    <div class={`line ${$sidebarOpen ? 'line-1' : ''}`}></div>
-    <div class={`line mt-0.75 ${$sidebarOpen ? 'line-2' : ''}`}></div>
-    <div class={`line mt-0.75 ${$sidebarOpen ? 'line-3' : ''}`}></div>
+    <div class={`line-menu ${$sidebarOpen ? 'line-1' : ''}`}></div>
+    <div class={`line-menu mt-0.75 ${$sidebarOpen ? 'line-2' : ''}`}></div>
+    <div class={`line-menu mt-0.75 ${$sidebarOpen ? 'line-3' : ''}`}></div>
   </div>
 </button>
 
@@ -37,7 +37,7 @@
     margin-top: 0.1875rem;
   }
 
-  .line {
+  .line-menu {
     background-color: var(--header-text-color);
     vertical-align: top;
     border-radius: 0.0625rem;
