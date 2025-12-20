@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro'
 import IndexContent from '../components/IndexContent.astro'
 import { getCollection } from 'astro:content'
 import themeConfig from '@/theme.config'
+import { date } from 'astro:schema'
 
 // Fetch all posts
 const allPosts = await getCollection('posts')
@@ -46,8 +47,10 @@ publishedPosts.forEach((post) => {
 
 // Transform categories for CategoryCards component
 const categories = Array.from(categoryMap.entries())
+  .filter(([name, _]) => themeConfig.home?.selectedCategories?.some(cat => cat.name === name))
   .map(([name, data]) => ({
     name,
+    cover: themeConfig.home?.selectedCategories?.find(cat => cat.name === name)?.cover,
     url: `/categories/${name}`,
     postCount: data.posts.length,
     posts: data.posts.slice(0, 6).map((p) => ({
@@ -56,8 +59,6 @@ const categories = Array.from(categoryMap.entries())
     })),
   }))
   .sort((a, b) => b.postCount - a.postCount)
-  .slice(0, 6) // Show top 6 categories
-
 
 ---
 

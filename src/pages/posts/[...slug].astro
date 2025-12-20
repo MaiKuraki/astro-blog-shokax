@@ -113,7 +113,7 @@ const author = siteConfig.author || 'Author'
 const siteName = themeConfig.siteName || 'Site'
 
 // Build permalink
-const permalink = `${Astro.site?.toString() || 'https://example.com'}posts/${post.id}`
+const permalink = `${Astro.site?.toString()}posts/${post.id}`
 
 // Build postMeta for Brand component
 const postMeta = {
@@ -131,6 +131,10 @@ const postMeta = {
   pageTitle={post.data.title}
   postMeta={postMeta}
 >
+  <Fragment slot="head">
+    <meta name="description" content={post.data.description || post.body?.slice(0, 150).replace(/\s+/g, ' ')} />
+  </Fragment>
+
   <div class="article wrap">
     <Breadcrumb categories={post.data.categories} />
 

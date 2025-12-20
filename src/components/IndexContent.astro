@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content'
 import PostSegments from './PostSegments.svelte'
 import CategoryCards from './CategoryCards.svelte'
 import Divider from './Divider.astro'
+import { countWords } from '@/toolkit/posts/calculateStats'
 
 interface CategoryItem {
   name: string
@@ -26,16 +27,6 @@ interface Props {
 
 const { posts, stickyPosts = [], categories = [], isFirstPage = true } = Astro.props
 
-// Helper function to calculate word count
-function calculateWordCount(text: string): number {
-  // Remove HTML tags and count words
-  const plainText = text.replace(/<[^>]*>/g, '')
-  // Count Chinese characters and English words
-  const chineseChars = (plainText.match(/[\u4e00-\u9fa5]/g) || []).length
-  const englishWords = (plainText.match(/[a-zA-Z]+/g) || []).length
-  return chineseChars + englishWords
-}
-
 // Helper function to calculate read time (assuming 300 words per minute)
 function calculateReadTime(wordCount: number): number {
   const wordsPerMinute = 300
@@ -45,7 +36,7 @@ function calculateReadTime(wordCount: number): number {
 // Helper function to transform posts
 function transformPosts(postList: CollectionEntry<'posts'>[]) {
   return postList.map((post) => {
-    const wordCount = calculateWordCount(post.body || '')
+    const wordCount = countWords(post.body || '')
     const readTime = calculateReadTime(wordCount)
     const lastCategory = post.data.categories?.[post.data.categories.length - 1]
 

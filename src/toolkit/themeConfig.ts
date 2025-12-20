@@ -38,6 +38,13 @@ interface WidgetsConfig {
   recentComments?: boolean
 }
 
+interface HomeConfig {
+  selectedCategories?: {
+    name: string
+    cover?: string
+  }[]
+}
+
 export interface ShokaXThemeConfig {
   siteName: string
   nav: NavItemType[]
@@ -46,6 +53,7 @@ export interface ShokaXThemeConfig {
   cover?: CoverConfig
   footer?: FooterConfig
   widgets?: WidgetsConfig
+  home?: HomeConfig
 }
 
 export function defineConfig(config: ShokaXThemeConfig) {
