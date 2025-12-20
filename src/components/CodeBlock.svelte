@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import {css} from '../assets/fonts/JetBrainsMono-VF.ttf?subsets'
-  import unoCss from 'uno.css?inline'
+  import unoStyle from 'unocss-inline/style';
 
   let container = $state<HTMLElement | null>(null);
   let copied = $state(false);
@@ -37,12 +37,11 @@
     const slot = container?.querySelector('slot') as HTMLSlotElement;
     const assignedElements = slot?.assignedElements({ flatten: true }) ?? [];
     const preElement = assignedElements.find((el) => el.tagName === 'PRE') as HTMLPreElement | undefined;
-    const codeElement = preElement?.querySelector('code');
-    if (!codeElement) return '';
+    if (!preElement) return '';
 
-    const classList = Array.from(codeElement.classList);
-    const langClass = classList.find(cls => cls.startsWith('language-'));
-    return langClass ? langClass.replace('language-', '') : '';
+    // 从 PRE 元素的 data-language 属性获取语言
+    const language = preElement.getAttribute('data-language');
+    return language ?? '';
   }
 
   onMount(() => {
@@ -52,14 +51,15 @@
     
     // 从插入的 DOM 中分析语言
     codeLanguage = getCodeLanguage();
-
-    const shadowHost = container?.getRootNode() as ShadowRoot;
-    if (shadowHost instanceof ShadowRoot) {
-      const style = document.createElement('style');
-      style.textContent = unoCss;
-      shadowHost.appendChild(style);
+    
+    const shadowRoot = container?.getRootNode() as ShadowRoot | Document;
+    if (shadowRoot instanceof ShadowRoot) {
+      shadowRoot.appendChild(unoStyle.cloneNode(true));
+    } else {
+      container?.appendChild(unoStyle);
     }
   });
+  
 </script>
 
 <div class="codeblock {isDark ? 'dark' : ''}">
