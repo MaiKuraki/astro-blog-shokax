@@ -9,6 +9,7 @@ import Font from 'vite-plugin-font'
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://preview.astro.kaitaku.xyz',
   prefetch: true,
   integrations: [UnoCSS({
     injectReset: true,

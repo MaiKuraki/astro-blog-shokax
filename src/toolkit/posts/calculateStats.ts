@@ -21,15 +21,18 @@ export interface Post {
  * Count words in a string
  * Supports multiple languages including Chinese
  */
-function countWords(text: string): number {
+export function countWords(text: string): number {
   if (!text)
     return 0
 
+  // Remove punctuation
+  const cleanedText = text.replace(/[^\w\s\u4E00-\u9FFF]/g, '')
+
   // Count Chinese characters (each character is one word)
-  const chineseCount = (text.match(/[\u4E00-\u9FFF]/g) || []).length
+  const chineseCount = (cleanedText.match(/[\u4E00-\u9FFF]/g) || []).length
 
   // Remove Chinese characters and count English words
-  const englishText = text.replace(/[\u4E00-\u9FFF]/g, '')
+  const englishText = cleanedText.replace(/[\u4E00-\u9FFF]/g, '')
   const englishCount = englishText.trim().split(/\s+/).filter(word => word.length > 0).length
 
   return chineseCount + englishCount

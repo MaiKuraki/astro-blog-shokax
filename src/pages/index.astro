@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro'
 import IndexContent from '../components/IndexContent.astro'
 import { getCollection } from 'astro:content'
+import themeConfig from '@/theme.config'
 
 // Fetch all posts
 const allPosts = await getCollection('posts')
@@ -56,8 +57,14 @@ const categories = Array.from(categoryMap.entries())
   }))
   .sort((a, b) => b.postCount - a.postCount)
   .slice(0, 6) // Show top 6 categories
+
+
 ---
 
-<Layout>
+<Layout pageTitle=`${themeConfig.brand?.logo || ''} = ${themeConfig.brand?.title || ''} = ${themeConfig.brand?.subtitle || ''}` indexPage={true}>
+  <Fragment slot="head">
+    <meta name="description" content={themeConfig.sidebar?.description}>
+  </Fragment>
+
   <IndexContent posts={regularPosts} stickyPosts={stickyPosts} categories={categories} isFirstPage={true} />
 </Layout>

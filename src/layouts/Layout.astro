@@ -31,9 +31,10 @@ interface Props {
   navigation?: QuickNavigation
   pageTitle?: string
   postMeta?: PostMeta
+  indexPage?: boolean
 }
 
-const { toc = [], relatedPosts = [], currentSlug = '', navigation = {}, pageTitle = '', postMeta } = Astro.props
+const { toc = [], relatedPosts = [], currentSlug = '', navigation = {}, pageTitle = '', postMeta, indexPage = false } = Astro.props
 
 const navLinks = themeConfig.nav
 const siteName = themeConfig.siteName
@@ -67,8 +68,14 @@ const siteState = {
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
     <ClientRouter />
+
+    <slot name="head" />
+
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none'">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <title>{pageTitle}</title>
   </head>
   <body>
     <div id="container">
@@ -87,7 +94,7 @@ const siteState = {
         title={brandConfig.title}
         subtitle={brandConfig.subtitle}
         logo={brandConfig.logo}
-        pageTitle={pageTitle}
+        pageTitle={indexPage ?  '' : pageTitle}
         postMeta={postMeta}
       />
       <Waves client:load />
