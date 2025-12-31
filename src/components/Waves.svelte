@@ -1,4 +1,35 @@
+<script>
+  import { onMount } from 'svelte';
+  
+  let wavesElement;
+  let isVisible = true;
+  
+  onMount(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
+        });
+      },
+      {
+        threshold: 0.1
+      }
+    );
+    
+    if (wavesElement) {
+      observer.observe(wavesElement);
+    }
+    
+    return () => {
+      if (wavesElement) {
+        observer.unobserve(wavesElement);
+      }
+    };
+  });
+</script>
+
 <svg
+  bind:this={wavesElement}
   class='waves mb-[-0.6875rem] h-15vh max-h-[9.375rem] min-h-[3.125rem] w-full relative md:h-10vh'
   xmlns='http://www.w3.org/2000/svg'
   xmlns:xlink='http://www.w3.org/1999/xlink'
@@ -12,7 +43,7 @@
       d='M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z'
     />
   </defs>
-  <g class='parallax'>
+  <g class='parallax' class:paused={!isVisible}>
     <use xlink:href='#gentle-wave' x='48' y='0' />
     <use xlink:href='#gentle-wave' x='48' y='3' />
     <use xlink:href='#gentle-wave' x='48' y='5' />
@@ -37,7 +68,8 @@
     animation: wave 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
   }
 
-  .parallax > :global(use.stop-animation) {
+  /* 当不在视口内时暂停动画 */
+  .parallax.paused > :global(use) {
     animation-play-state: paused;
   }
 

@@ -1,17 +1,17 @@
 ---
 interface Props {
-  date: Date
-  updated?: Date
-  permalink: string
-  title: string
-  author?: string
-  siteName?: string
-  showCopyright?: boolean
-  showReward?: boolean
+  date: Date;
+  updated?: Date;
+  permalink: string;
+  title: string;
+  author?: string;
+  siteName?: string;
+  showCopyright?: boolean;
+  showReward?: boolean;
   rewardConfig?: {
-    enable: boolean
-    accounts?: Record<string, string>
-  }
+    enable: boolean;
+    accounts?: Record<string, string>;
+  };
 }
 
 const {
@@ -19,22 +19,22 @@ const {
   updated,
   permalink,
   title,
-  author = 'Author',
-  siteName = 'Site',
+  author = "Author",
+  siteName = "Site",
   showCopyright = true,
   showReward = false,
   rewardConfig,
-} = Astro.props
+} = Astro.props;
 
 function formatDate(d: Date): string {
-  return d.toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  })
+  return d.toLocaleDateString("zh-CN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
 }
 
-const hasUpdated = updated && formatDate(date) !== formatDate(updated)
+const hasUpdated = updated && formatDate(date) !== formatDate(updated);
 ---
 
 <footer>
@@ -47,7 +47,7 @@ const hasUpdated = updated && formatDate(date) !== formatDate(updated)
           </span>
           <span class="text">编辑于 </span>
           <time
-            title={`修改于: ${updated.toLocaleString('zh-CN')}`}
+            title={`修改于: ${updated.toLocaleString("zh-CN")}`}
             itemprop="dateModified"
             datetime={updated.toISOString()}
           >
@@ -70,7 +70,11 @@ const hasUpdated = updated && formatDate(date) !== formatDate(updated)
           {rewardConfig.accounts &&
             Object.entries(rewardConfig.accounts).map(([name, image]) => (
               <div>
-                <img loading="lazy" src={image as string} alt={`${author} ${name}`} />
+                <img
+                  loading="lazy"
+                  src={image as string}
+                  alt={`${author} ${name}`}
+                />
                 <p>{name}</p>
               </div>
             ))}
@@ -83,7 +87,7 @@ const hasUpdated = updated && formatDate(date) !== formatDate(updated)
       <div id="copyright">
         <ul>
           <li class="author">
-            <div class="icon i-ri-account-circle-line"></div>
+            <div class="icon i-ri-account-circle-line" />
             <strong>文章作者: </strong>
             {author}
             <i class="ic i-ri-at-line">
@@ -92,17 +96,21 @@ const hasUpdated = updated && formatDate(date) !== formatDate(updated)
             {siteName}
           </li>
           <li class="link">
-            <div class="icon i-ri-link"></div>
+            <div class="icon i-ri-link" />
             <strong>文章链接: </strong>
             <a href={permalink} title={title}>
               {permalink}
             </a>
           </li>
           <li class="license">
-            <div class="icon i-ri-copyright-line"></div>
+            <div class="icon i-ri-copyright-line" />
             <strong>版权声明: </strong>
             本文采用
-            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">
+            <a
+              href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+              target="_blank"
+              rel="noopener"
+            >
               <i class="ic i-ri-creative-commons-line">
                 <em>(CC)</em>
               </i>
