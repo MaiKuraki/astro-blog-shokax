@@ -1,5 +1,7 @@
 # Astro Blog ShokaX
 
+**正在开发中，不保证配置与 API 稳定性，不建议用于生产**
+
 这是 [Hexo Theme ShokaX](https://github.com/theme-shoka-x/hexo-theme-shokaX) 在 Astro 上的重构版本，使用 Astro + Svelte 5 + UnoCSS 技术栈
 
 本项目建议使用 [Bun](https://bun.sh/) 运行，不保证与 Nodejs 的兼容性
