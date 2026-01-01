@@ -30,7 +30,7 @@
 
 <svg
   bind:this={wavesElement}
-  class="waves mb-[-0.6875rem] h-15vh max-h-[9.375rem] min-h-[3.125rem] w-full relative md:h-10vh"
+  class="waves mb-[-0.6875rem] max-h-[9.375rem] min-h-[3.125rem] w-full relative md:h-10vh"
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   viewBox="0 24 150 28"
@@ -53,6 +53,7 @@
 
 <style>
   .waves {
+    height: 15vh;
     content-visibility: auto;
     contain-intrinsic-size: 100vw 15vh;
   }

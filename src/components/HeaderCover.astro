@@ -28,16 +28,15 @@ const singleImage =
   fixedCover || (gradient ? 'https://7ed.net/bing/api' : covers[0])
 ---
 {enableCover && (
-  <>
-    <div class="h-40vh"></div>
+    <div class="spacer"></div>
 
     <div
       id="imgs"
-      class="imgs-container bg-[#363636] h-70vh min-h-[25rem] w-full left-0 top-0 fixed -z-9"
+      class="imgs-container"
     >
       {isMultipleImages ? (
         <!-- 多图轮播模式 -->
-        <ul class="h-full w-full relative">
+        <ul class="image-list">
           {covers.map((cover, index) => (
             <CoverImage
               src={cover}
@@ -57,15 +56,43 @@ const singleImage =
         />
       )}
 
-      <!-- 遮罩层 -->
-      <div class="imgs-overlay bg-black/20 h-full w-full transition-opacity duration-300 left-0 top-0 absolute z-1"></div>
+      <div class="imgs-overlay"></div>
     </div>
   </>
 )}
 
 <style>
+  .spacer {
+    height: 40vh;
+  }
+
   .imgs-container {
+    background-color: #363636;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -9;
+    height: 70vh;
+    min-height: 25rem;
     content-visibility: auto;
     contain-intrinsic-size: 100vw 70vh;
+  }
+
+  .image-list {
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+  .imgs-overlay {
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 100%;
+    width: 100%;
+    transition: opacity 0.3s;
+    left: 0;
+    top: 0;
+    position: absolute;
+    z-index: 1;
   }
 </style>

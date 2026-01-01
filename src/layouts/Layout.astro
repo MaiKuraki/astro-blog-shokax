@@ -92,23 +92,16 @@ import CodeBlock from "@/components/CodeBlock.svelte";
 
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 
-    {
-      themeConfig.cover?.enablePreload &&
-        covers?.map((cover) => (
-          <link rel="preload" as="image" href={cover.src} />
-        ))
-    }
-
-    {
-      themeConfig.cover?.fixedCover && themeConfig.cover.enablePreload && (
-        <link rel="preload" as="image" href={themeConfig.cover.fixedCover} />
-      )
-    }
-
     <title>{pageTitle}</title>
   </head>
   <body>
-    <Loading />
+    <NavBar
+      client:load
+      name={siteName}
+      navLinks={navLinks}
+      clickToggleCallback={() => void 0}
+    />
+    <!-- <Loading /> -->
     <div id="container">
       <HeaderCover
         enableCover={coverConfig.enableCover}
@@ -124,12 +117,6 @@ import CodeBlock from "@/components/CodeBlock.svelte";
         logo={brandConfig.logo}
         pageTitle={indexPage ? "" : pageTitle}
         postMeta={postMeta}
-      />
-      <NavBar
-        client:load
-        name={siteName}
-        navLinks={navLinks}
-        clickToggleCallback={() => void 0}
       />
       <Waves client:load />
       <main>

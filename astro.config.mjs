@@ -56,7 +56,6 @@ export default defineConfig({
         scanFiles: ["src/**/*.{svelte,ts,tsx,js,jsx,md}"],
       }),
       esToolkitPlugin(),
-      unocssInline(),
     ],
   },
   markdown: {

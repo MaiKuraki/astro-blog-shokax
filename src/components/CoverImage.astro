@@ -24,7 +24,7 @@ const animationDelay = isListItem ? `${index * 6}s` : '0s'
 {isListItem ? (
   <!-- 多图轮播模式 -->
   <li
-    class="cover-item opacity-0 h-70vh w-full left-0 top-0 absolute z-0 overflow-hidden"
+    class="cover-item"
     style={`animation-delay: ${animationDelay};`}
     onmouseenter="this.classList.add('stop-animation')"
     onmouseleave="this.classList.remove('stop-animation')"
@@ -38,7 +38,7 @@ const animationDelay = isListItem ? `${index * 6}s` : '0s'
       format='avif'
       loading="eager"
       fetchpriority="high"
-      class="h-full w-full object-cover"
+      class="cover-image"
     />
   </li>
 ) : (
@@ -50,12 +50,20 @@ const animationDelay = isListItem ? `${index * 6}s` : '0s'
     loading="eager"
     format='avif'
     fetchpriority="high"
-    class="h-full w-full left-0 top-0 absolute object-cover"
+    class="single-image"
   />
 )}
 
 <style>
   .cover-item {
+    opacity: 0;
+    height: 70vh;
+    width: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    z-index: 0;
+    overflow: hidden;
     animation: imageAnimation 36s linear infinite 0s;
     backface-visibility: hidden;
     transform-style: preserve-3d;
@@ -63,6 +71,21 @@ const animationDelay = isListItem ? `${index * 6}s` : '0s'
   
   .cover-item.stop-animation {
     animation-play-state: paused;
+  }
+  
+  .cover-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  
+  .single-image {
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    object-fit: cover;
   }
   
   /* 动画应用到容器上，图片本身用 object-cover 填充 */

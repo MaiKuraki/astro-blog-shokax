@@ -51,16 +51,17 @@
   }
 
   onMount(async () => {
-    const unoStyle = await import("unocss-inline/style");
+    // FIXME: 经查证，unocss-inline 会导致严重 CLS 问题，现暂时禁用，寻找其他解决方案
+    // const unoStyle = await import("unocss-inline/style");
     // 从插入的 DOM 中分析语言
     codeLanguage = getCodeLanguage();
 
-    const shadowRoot = container?.getRootNode() as ShadowRoot | Document;
-    if (shadowRoot instanceof ShadowRoot) {
-      shadowRoot.appendChild(unoStyle.default.cloneNode(true));
-    } else {
-      container?.appendChild(unoStyle.default);
-    }
+    // const shadowRoot = container?.getRootNode() as ShadowRoot | Document;
+    // if (shadowRoot instanceof ShadowRoot) {
+    //   shadowRoot.appendChild(unoStyle.default.cloneNode(true));
+    // } else {
+    //   container?.appendChild(unoStyle.default);
+    // }
   });
 
   const updateTheme = () => {
