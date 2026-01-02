@@ -8,6 +8,7 @@
     SidebarConfig,
     TocItem,
   } from "./SidebarTypes";
+  import type { Snippet } from "svelte";
   import { onMount } from "svelte";
   import { sidebarOpen } from "../../stores/sidebarStore";
   import SidebarContents from "./SidebarContents.svelte";
@@ -31,13 +32,13 @@
       posts: number;
       tags: number;
     };
+    children?: Snippet;
   }
 
   const {
     config = {
       author: "",
       description: "",
-      avatar: "",
       social: {},
     },
     navLinks = [],
@@ -50,6 +51,7 @@
       posts: 0,
       tags: 0,
     },
+    children,
   }: Props = $props();
 
   let activePanel: PanelType = $state("overview");
@@ -179,7 +181,12 @@
             class={activePanel === panel.id ? "active" : ""}
           >
             {#if panel.id === "overview"}
-              <SidebarOverview {siteState} {config} {menuSource} />
+              <SidebarOverview
+                {siteState}
+                {config}
+                {menuSource}
+                avatarImage={children}
+              />
             {:else if panel.id === "related"}
               <SidebarRelated posts={relatedPosts} {currentSlug} />
             {:else if panel.id === "contents"}

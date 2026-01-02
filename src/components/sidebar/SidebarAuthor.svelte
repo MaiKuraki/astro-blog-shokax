@@ -1,27 +1,21 @@
 <script lang="ts">
+  import type { Snippet } from "svelte";
+
   interface Props {
     author?: string;
-    avatar?: string;
     description?: string;
+    avatarImage?: Snippet;
   }
 
-  const { author = "", avatar = "", description = "" }: Props = $props();
+  const { author = "", description = "", avatarImage }: Props = $props();
 </script>
 
-{#if author || avatar}
+{#if author || avatarImage}
   <div class="author" itemscope itemtype="http://schema.org/Person">
-    {#if avatar}
-      <img
-        class="image"
-        src={avatar}
-        alt={author || "Author"}
-        itemprop="image"
-        loading="eager"
-        decoding="async"
-        fetchpriority="high"
-        width="160"
-        height="160"
-      />
+    {#if avatarImage}
+      <div class="image" itemprop="image">
+        {@render avatarImage()}
+      </div>
     {/if}
     {#if author}
       <p class="name" itemprop="name">{author}</p>
@@ -42,6 +36,14 @@
     box-shadow: 0 0 1rem 0.625rem var(--body-bg-shadow);
     border-radius: 50%;
     transition: transform 0.3s ease;
+    overflow: hidden;
+  }
+
+  .author .image :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
   }
 
   .author:hover .image {

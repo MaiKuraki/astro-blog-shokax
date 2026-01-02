@@ -1,9 +1,10 @@
 import type { NavItemType } from "../navbar/NavTypes";
+import type { ImageMetadata } from "astro";
 
 export interface SidebarConfig {
   author?: string;
   description?: string;
-  avatar?: string;
+  avatar?: ImageMetadata;
   social?: Record<string, SocialLink>;
   menu?: NavItemType[];
 }

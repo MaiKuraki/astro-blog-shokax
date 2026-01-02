@@ -1,29 +1,31 @@
-<script lang='ts'>
-  import type { NavItemType } from '../navbar/NavTypes'
-  import type { SidebarConfig } from './SidebarTypes'
-  import SidebarAuthor from './SidebarAuthor.svelte'
-  import SidebarMenu from './SidebarMenu.svelte'
-  import SidebarSocial from './SidebarSocial.svelte'
-  import SidebarState from './SidebarState.svelte'
+<script lang="ts">
+  import type { NavItemType } from "../navbar/NavTypes";
+  import type { SidebarConfig } from "./SidebarTypes";
+  import type { Snippet } from "svelte";
+  import SidebarAuthor from "./SidebarAuthor.svelte";
+  import SidebarMenu from "./SidebarMenu.svelte";
+  import SidebarSocial from "./SidebarSocial.svelte";
+  import SidebarState from "./SidebarState.svelte";
 
   interface Props {
-    config: SidebarConfig
+    config: SidebarConfig;
     siteState: {
-      categories: number
-      posts: number
-      tags: number
-    }
-    menuSource: NavItemType[] | any
+      categories: number;
+      posts: number;
+      tags: number;
+    };
+    menuSource: NavItemType[] | any;
+    avatarImage?: Snippet;
   }
 
-  const { config, menuSource, siteState }: Props = $props()
+  const { config, menuSource, siteState, avatarImage }: Props = $props();
 </script>
 
-<div class='overview'>
+<div class="overview">
   <SidebarAuthor
-    author={config.author || ''}
-    avatar={config.avatar || ''}
-    description={config.description || ''}
+    author={config.author || ""}
+    description={config.description || ""}
+    {avatarImage}
   />
 
   <SidebarState state={siteState} />

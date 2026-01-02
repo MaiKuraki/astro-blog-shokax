@@ -1,7 +1,7 @@
 ---
 import NavBar from "@/components/navbar/NavBar.svelte";
 import Brand from "@/components/Brand.astro";
-import Sidebar from "@/components/sidebar/Sidebar.svelte";
+import SidebarWrapper from "@/components/sidebar/SidebarWrapper.astro";
 import HeaderCover from "@/components/HeaderCover.astro";
 import Waves from "@/components/Waves.svelte";
 import Footer from "@/components/footer/Footer.astro";
@@ -145,8 +145,7 @@ import SearchPage from "@/components/search/SearchPage.svelte";
             </footer>
           </div>
           <div id="sidebar" class="mt-12 mr-12">
-            <Sidebar
-              client:load
+            <SidebarWrapper
               config={sidebarConfig}
               navLinks={navLinks}
               toc={toc}
