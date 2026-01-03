@@ -3,12 +3,27 @@
   "compilerOptions": {
     "jsx": "preserve",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
-    "types": ["vite-plugin-font/src/font", "@types/bun"],
+    "types": [
+      "vite-plugin-font/src/font",
+      "@types/bun"
+    ],
     "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true
+    "noImplicitOverride": true,
+    "plugins": [
+      {
+        "name": "@astrojs/ts-plugin"
+      },
+    ],
   },
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"]
+  "include": [
+    ".astro/types.d.ts",
+    "**/*"
+  ],
+  "exclude": [
+    "dist"
+  ]
 }

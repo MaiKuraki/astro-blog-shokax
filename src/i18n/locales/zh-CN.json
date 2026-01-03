@@ -66,7 +66,9 @@
     }
   },
   "footer": {
-    "poweredBy": "由 Astro 强力驱动",
+    "poweredBy": "由",
+    "and": "和",
+    "poweredSuffix": "主题强力驱动",
     "randomPosts": "随机文章"
   },
   "pagination": {
