@@ -34,7 +34,7 @@ function buildPageItems(current: number, last: number): Array<number | "…"> {
   if (last <= 1) return [1];
 
   // 小页数：全部展示
-  if (last <= 7) {
+  if (last <= 4) {
     return Array.from({ length: last }, (_, i) => i + 1);
   }
 
@@ -123,7 +123,7 @@ const items = buildPageItems(safeCurrent, safeLast);
   .pagination .next,
   .pagination .page-number {
     transition:
-      background-color 0.2s ease,
+      background 0.2s ease,
       color 0.2s ease,
       box-shadow 0.2s ease;
     color: inherit;
@@ -133,7 +133,11 @@ const items = buildPageItems(safeCurrent, safeLast);
   .pagination .prev:hover,
   .pagination .next:hover,
   .pagination .page-number:hover {
-    background: var(--primary-color);
+    background: linear-gradient(
+      to right,
+      var(--color-pink),
+      var(--color-orange)
+    );
     color: var(--grey-0);
   }
 
@@ -151,7 +155,11 @@ const items = buildPageItems(safeCurrent, safeLast);
   }
 
   .pagination .page-number.current {
-    background: var(--primary-color);
+    background: linear-gradient(
+      to right,
+      var(--color-pink),
+      var(--color-orange)
+    );
     color: var(--grey-0);
   }
 

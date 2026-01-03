@@ -1,100 +1,97 @@
-<script lang='ts'>
-  import { onMount } from 'svelte'
-  import CategoryCard from './CategoryCard.svelte'
+<script lang="ts">
+  import { onMount } from "svelte";
+  import CategoryCard from "./CategoryCard.svelte";
 
   interface PostInfo {
-    title: string
-    url: string
+    title: string;
+    url: string;
   }
 
   interface CategoryItem {
-    name: string
-    url: string
-    cover?: string
+    name: string;
+    url: string;
+    cover?: string;
     topCategory?: {
-      name: string
-      url: string
-    }
-    postCount: number
-    childCount?: number
-    posts: PostInfo[]
+      name: string;
+      url: string;
+    };
+    postCount: number;
+    childCount?: number;
+    posts: PostInfo[];
   }
 
   interface Props {
-    categories?: CategoryItem[]
+    categories?: CategoryItem[];
   }
 
-  const { categories = [] }: Props = $props()
+  const { categories = [] }: Props = $props();
 
-  let container: HTMLDivElement | null = null
-  let items: HTMLElement[] = []
-  let activeIndex = $state<number | null>(null)
+  let container: HTMLDivElement | null = null;
+  let items: HTMLElement[] = [];
+  let activeIndex = $state<number | null>(null);
 
   function handleMouseEnter(index: number) {
     // Remove active from current active item
     if (activeIndex !== null && activeIndex !== index) {
-      activeIndex = null
+      activeIndex = null;
     }
     // Set new active
-    activeIndex = index
+    activeIndex = index;
   }
 
   function handleMouseLeave(index: number) {
     // Only remove if this is the active item
     if (activeIndex === index) {
-      activeIndex = null
+      activeIndex = null;
     }
   }
 
   onMount(() => {
-    if (!container)
-      return
+    if (!container) return;
 
     // Get all category items
-    items = Array.from(container.querySelectorAll('.item'))
+    items = Array.from(container.querySelectorAll(".item"));
 
-    if (items.length === 0)
-      return
+    if (items.length === 0) return;
 
     // Intersection Observer for scroll animations
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.target.classList.contains('show')) {
-            io.unobserve(entry.target)
-          }
-          else {
+          if (entry.target.classList.contains("show")) {
+            io.unobserve(entry.target);
+          } else {
             if (entry.isIntersecting || entry.intersectionRatio > 0) {
-              entry.target.classList.add('show')
-              io.unobserve(entry.target)
+              entry.target.classList.add("show");
+              io.unobserve(entry.target);
             }
           }
-        })
+        });
       },
       {
         root: null,
         threshold: [0.3],
       },
-    )
+    );
 
     // Observe all items
     items.forEach((item) => {
-      io.observe(item)
-    })
+      io.observe(item);
+    });
 
     // Show first 2 items immediately
     items.slice(0, 2).forEach((item) => {
-      item.classList.add('show')
-    })
+      item.classList.add("show");
+    });
 
     // Cleanup
     return () => {
-      items.forEach(item => io.unobserve(item))
-    }
-  })
+      items.forEach((item) => io.unobserve(item));
+    };
+  });
 </script>
 
-<div bind:this={container} class='cards w-full'>
+<div bind:this={container} class="cards w-full">
   {#each categories as category, index (category.url)}
     <CategoryCard
       name={category.name}
