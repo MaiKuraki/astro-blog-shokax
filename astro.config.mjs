@@ -24,7 +24,7 @@ import remarkEmoji from "remark-emoji";
 import remarkExtendedTable from "remark-extended-table";
 import remarkBreaks from "remark-breaks";
 
-import spoiler from "./src/plugins/spoiler.mjs";
+import spoiler from "./src/remark-plugins/spoiler.mjs";
 
 import Font from "vite-plugin-font";
 

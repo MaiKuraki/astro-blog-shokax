@@ -1,0 +1,5 @@
+export const PLUGIN_API_VERSION = {
+  major: 0,
+  minor: 0,
+  patch: 1,
+};
