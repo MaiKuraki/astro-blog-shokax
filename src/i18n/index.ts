@@ -29,6 +29,7 @@ export async function initI18n(locale: Locale = "zh-CN") {
       interpolation: {
         escapeValue: false, // React/Astro already handles escaping
       },
+      showSupportNotice: false,
     });
   } else if (i18next.language !== locale) {
     await i18next.changeLanguage(locale);
