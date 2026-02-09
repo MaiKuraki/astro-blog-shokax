@@ -192,6 +192,38 @@ interface HomeConfig {
   pageSize?: number;
 }
 
+export interface FriendLinkConfig {
+  /** 站点地址 */
+  url: string;
+  /** 站点标题 */
+  title: string;
+  /** 站点描述 */
+  desc: string;
+  /** 作者或站点主理人 */
+  author: string;
+  /** 头像地址 */
+  avatar: string;
+  /** 主题色（可选，支持 CSS 颜色值或变量） */
+  color?: string;
+  /** 站点预览图（可选） */
+  siteImage?: string;
+}
+
+interface FriendsConfig {
+  /** 友链页面标题 */
+  title?: string;
+  /** 友链页面描述 */
+  description?: string;
+  /** 友链配置示例使用的头像（可选） */
+  avatar?: string;
+  /** 友链配置示例使用的主题色（可选） */
+  color?: string;
+  /** 友链配置示例使用的站点预览图（可选） */
+  siteImage?: string;
+  /** 友链列表 */
+  links: FriendLinkConfig[];
+}
+
 /**
  * 协议类型
  * CC 4.0 系列：BY, BY-SA, BY-ND, BY-NC, BY-NC-SA, BY-NC-ND
@@ -277,6 +309,12 @@ export interface ShokaXThemeConfig {
    * - 设置文章默认许可协议和版权声明显示
    */
   copyright?: CopyrightConfig;
+
+  /**
+   * 友链配置。
+   * - 定义友链页面展示的卡片数据
+   */
+  friends?: FriendsConfig;
 }
 
 export function defineConfig(config: ShokaXThemeConfig) {
