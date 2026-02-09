@@ -68,7 +68,7 @@
 
 <nav
   id="nav"
-  class={`h-12.5 w-full z-9 backdrop-blur-8 backdrop-saturate-180 ${!atTop ? "nav-bg" : ""}`.trim()}
+  class={`h-12.5 w-full z-9 backdrop-blur-8 backdrop-saturate-180 ${atTop ? "nav-top" : "nav-bg"}`.trim()}
   style={showNav ? "" : "transform: translateY(-100%);"}
 >
   <div
@@ -110,5 +110,16 @@
     box-shadow: 0.1rem 0.1rem 0.2rem var(--grey-9-a1);
     text-shadow: 0 0 0.0625rem var(--grey-9-a1);
     color: var(--text-color);
+  }
+
+  .nav-top {
+    color: var(--header-text-color);
+    background-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.45) 0%,
+      rgba(0, 0, 0, 0.2) 45%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.5);
   }
 </style>
