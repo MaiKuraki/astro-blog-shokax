@@ -33,6 +33,11 @@ export default defineConfig({
         },
       ],
     },
+    {
+      text: "友链",
+      href: "/friends/",
+      icon: "i-ri-link",
+    },
   ],
   brand: {
     title: "ShokaX",
