@@ -75,7 +75,7 @@
 </script>
 
 <aside
-  class="widgets bg-body-bg-shadow border-grey-3 my-8 px-4 py-4 border-b border-t flex gap-4 justify-around z-1"
+  class="widgets bg-body-bg-shadow my-8 px-4 py-4 flex gap-4 justify-around z-1"
 >
   <!-- Random Posts Widget -->
   {#if enableRandomPosts && randomPosts.length > 0}
