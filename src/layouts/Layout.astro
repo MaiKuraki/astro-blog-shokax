@@ -212,17 +212,6 @@ import SearchPage from "@/components/search/SearchPage.svelte";
         document.body.style.fontFamily = css.family as string;
       });
     </script>
-    <script>
-      import { initializeCodeBlock } from "@/toolkit/initCodeBlock";
-
-      document.addEventListener("pagereveal", () => {
-        initializeCodeBlock(".astro-code");
-      });
-
-      document.addEventListener("DOMContentLoaded", () => {
-        initializeCodeBlock(".astro-code");
-      });
-    </script>
     <script
       define:vars={{
         visibilityTitleConfig,

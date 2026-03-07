@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, tick } from "svelte";
+  import { createEventDispatcher } from "svelte";
   import type { EncryptedData, TocItem } from "@/toolkit/encryption/types";
   import { decryptContent } from "@/toolkit/encryption/crypto";
   import { encryptedTocStore } from "@/stores/encryptedTocStore";
@@ -7,7 +7,6 @@
   import themeConfig from "@/theme.config";
   import PasswordModal from "./PasswordModal.svelte";
   import "./encrypted.css";
-  import { initializeCodeBlock } from "@/toolkit/initCodeBlock";
 
   interface Props {
     encryptedContent: EncryptedData;
@@ -53,8 +52,6 @@
       }
       dispatch("decrypted", { content, toc: decryptedToc });
       isDecrypted = true;
-      await tick();
-      initializeCodeBlock(".astro-code");
     } finally {
       isDecrypting = false;
     }

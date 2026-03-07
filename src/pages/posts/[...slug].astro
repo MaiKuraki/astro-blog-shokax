@@ -8,7 +8,6 @@ import AiSimilarPosts from "@/components/post/AiSimilarPosts.astro";
 import AiSummaryCard from "@/components/post/AiSummaryCard.astro";
 import WalineComments from "@/components/post/WalineComments.svelte";
 import { getCollection, render } from "astro:content";
-import { experimental_AstroContainer } from "astro/container";
 import themeConfig from "@/theme.config";
 import type {
   TocItem,
@@ -16,6 +15,8 @@ import type {
 } from "@/components/sidebar/SidebarTypes";
 import type { EncryptedData } from "@/toolkit/encryption/types";
 import { encryptContent } from "@/toolkit/encryption/crypto";
+import { createPostContentContainer } from "@/toolkit/posts/createPostContentContainer";
+import { wrapRenderedCodeBlocks } from "@/toolkit/wrapRenderedCodeBlocks";
 
 import "@/styles/post.css";
 
@@ -33,7 +34,7 @@ export async function getStaticPaths() {
     .filter((post) => !post.data.draft)
     .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-  const container = await experimental_AstroContainer.create();
+  const container = await createPostContentContainer();
 
   return Promise.all(
     sortedPosts.map(async (post, index) => {
@@ -71,7 +72,9 @@ export async function getStaticPaths() {
         isEncrypted = true;
 
         // 使用 renderToString 渲染文章内容为 HTML
-        const html = await container.renderToString(Content);
+        const html = wrapRenderedCodeBlocks(
+          await container.renderToString(Content),
+        );
 
         // 加密内容
         encryptedContent = await encryptContent(html, post.data.password);
@@ -159,6 +162,10 @@ const {
 } = Astro.props as Props;
 
 const { Content } = await render(post);
+const contentContainer = await createPostContentContainer();
+const renderedPostHtml = wrapRenderedCodeBlocks(
+  await contentContainer.renderToString(Content),
+);
 
 // Build TOC from headings (加密文章的 TOC 在前端解密后更新)
 const toc: TocItem[] = isEncrypted
@@ -385,7 +392,7 @@ const postMeta = {
                 title={post.data.title}
               />
             ) : (
-              <Content />
+              <Fragment set:html={renderedPostHtml} />
             )
           }
 
