@@ -320,7 +320,7 @@ interface LayoutConfig {
 
     /**
      * 是否显示最近动态（说说）。
-     * - true：显示最近几条动态
+     * - true：显示最新 1 条动态
      * - false/未设置：隐藏
      */
     recentMoments?: boolean;
