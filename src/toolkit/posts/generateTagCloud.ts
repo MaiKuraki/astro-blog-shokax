@@ -1,4 +1,5 @@
 import { TinyColor } from "@ctrl/tinycolor";
+import { isThemeTokenRef, sanitizeThemeColor, type ThemeColorValue } from "@/toolkit/themeColor";
 
 interface Tag {
   name: string;
@@ -8,8 +9,8 @@ interface Tag {
 interface TagCloudOptions {
   minFontSize: number; // 最小字体大小（例如 12）
   maxFontSize: number; // 最大字体大小（例如 32）
-  startColor?: string; // 起始颜色，例如 '#888888' / 'var(--grey-6)'
-  endColor?: string; // 终止颜色，例如 '#ff0000' / 'var(--color-blue)'
+  startColor?: ThemeColorValue; // 起始颜色，例如 '#888888' / 'var(--grey-6)'
+  endColor?: ThemeColorValue; // 终止颜色，例如 '#ff0000' / 'var(--color-blue)'
   limit?: number; // 最大处理数量
 }
 
@@ -37,8 +38,16 @@ interface TagCloudItem {
 export function generateTagCloud(tags: Tag[], options: TagCloudOptions): TagCloudItem[] {
   const { minFontSize, maxFontSize, startColor, endColor, limit } = options;
 
-  const effectiveStartColor = startColor || DEFAULT_TAG_CLOUD_START_COLOR;
-  const effectiveEndColor = endColor || DEFAULT_TAG_CLOUD_END_COLOR;
+  const effectiveStartColor = sanitizeThemeColor(
+    startColor,
+    DEFAULT_TAG_CLOUD_START_COLOR,
+    "tagCloud.startColor(generate)",
+  );
+  const effectiveEndColor = sanitizeThemeColor(
+    endColor,
+    DEFAULT_TAG_CLOUD_END_COLOR,
+    "tagCloud.endColor(generate)",
+  );
 
   const sorted = [...tags].sort((a, b) => b.count - a.count);
   const limited = typeof limit === "number" ? sorted.slice(0, limit) : sorted;
@@ -49,15 +58,19 @@ export function generateTagCloud(tags: Tag[], options: TagCloudOptions): TagClou
 
   const start = new TinyColor(effectiveStartColor);
   const end = new TinyColor(effectiveEndColor);
-  const canUseTinyColor = start.isValid && end.isValid;
+  const shouldUseCssMix =
+    isThemeTokenRef(effectiveStartColor) ||
+    isThemeTokenRef(effectiveEndColor) ||
+    !start.isValid ||
+    !end.isValid;
 
   return limited.map((tag) => {
     const weight = (tag.count - minCount) / range;
     const fontSize = Math.round(minFontSize + (maxFontSize - minFontSize) * weight);
     const mixPercent = weight * 100;
-    const color = canUseTinyColor
-      ? start.mix(effectiveEndColor, mixPercent).toHexString()
-      : `color-mix(in oklch, ${effectiveStartColor} ${100 - mixPercent}%, ${effectiveEndColor} ${mixPercent}%)`;
+    const color = shouldUseCssMix
+      ? `color-mix(in oklch, ${effectiveStartColor} ${100 - mixPercent}%, ${effectiveEndColor} ${mixPercent}%)`
+      : start.mix(effectiveEndColor, mixPercent).toHexString();
 
     return {
       name: tag.name,

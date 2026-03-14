@@ -21,9 +21,7 @@
   --grey-9-a6: oklch(0 0 0 / 0.6);
   --grey-2-a0: oklch(0.975 0 0 / 0);
 
-  --color-pink-light-old: oklch(0.946 0.06 338.1);
   --color-pink-light: oklch(0.946 0.06 338.1 / 0.72);
-  --color-cyan-light-old: oklch(0.972 0.038 169.1);
   --color-cyan-light: oklch(0.972 0.038 169.1 / 0.72);
 
   --color-red: oklch(0.579 0.24 22.2);
@@ -53,6 +51,25 @@
   --primary-color: var(--color-red);
   --surface-code: var(--grey-3);
   --surface-code-header: var(--grey-2);
+
+  /* Layer tokens */
+  --z-behind: -1;
+  --z-base: 0;
+  --z-content: 1;
+  --z-elevated: 2;
+  --z-dropdown: 10;
+  --z-floating: 40;
+  --z-sidebar-overlay: 99;
+  --z-sidebar: 100;
+  --z-search-overlay: 999;
+  --z-fullscreen: 9999;
+
+  /* Breakpoint baseline (for migration reference) */
+  --bp-sm: 480px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1440px;
+  --bp-touch-max: 1023px;
 
   --codeblock-shadow: 0.5rem 0.5rem 1rem var(--grey-3);
   --codeblock-dot-red: oklch(0.62 0.2 16.9);

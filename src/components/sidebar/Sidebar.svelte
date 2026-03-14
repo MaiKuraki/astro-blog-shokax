@@ -279,7 +279,7 @@
       right: 0;
       background: var(--grey-1);
       box-shadow: var(--shadow-sidebar-mobile);
-      z-index: 100;
+      z-index: var(--z-sidebar);
       width: 280px;
       height: 100%;
     }
@@ -312,7 +312,7 @@
     justify-content: space-around;
     align-items: flex-start;
     flex-wrap: wrap;
-    z-index: 1;
+    z-index: var(--z-content);
   }
 
   /* Panels */
@@ -358,7 +358,7 @@
       opacity: 0;
       top: 0;
       width: 100%;
-      z-index: 99;
+      z-index: var(--z-sidebar-overlay);
       transition: opacity 1s;
     }
 

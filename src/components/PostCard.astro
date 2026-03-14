@@ -133,7 +133,7 @@ const lastCategory = post.data.categories?.[post.data.categories.length - 1];
     bottom: 0;
     background: var(--cover-overlay-gradient);
     opacity: 0.3;
-    z-index: 1;
+    z-index: var(--z-content);
   }
 
   .info {
@@ -242,7 +242,7 @@ const lastCategory = post.data.categories?.[post.data.categories.length - 1];
     align-items: center;
     justify-content: center;
     height: 2rem;
-    z-index: 2;
+    z-index: var(--z-elevated);
   }
 
   .read-more-btn:hover {

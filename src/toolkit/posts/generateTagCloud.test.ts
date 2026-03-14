@@ -15,7 +15,7 @@ describe("generateTagCloud", () => {
     startColor: "#aaaaff",
     endColor: "#ff5555",
     limit: 100,
-  };
+  } satisfies Parameters<typeof generateTagCloud>[1];
 
   it("should generate font size within the correct range", () => {
     const cloud = generateTagCloud(tags, options);

@@ -24,7 +24,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    z-index: 999;
+    z-index: var(--z-search-overlay);
     background-color: var(--grey-1);
     display: flex;
     justify-content: center;
@@ -208,7 +208,7 @@
     position: absolute;
     top: 2.625em;
     left: 2.5em;
-    z-index: -1;
+    z-index: var(--z-behind);
     transform: rotate(25deg);
     background-color: var(--loading-cat-fur-dark);
     border: 0.375em solid var(--loading-cat-line);

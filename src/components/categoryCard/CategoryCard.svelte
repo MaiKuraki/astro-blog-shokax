@@ -190,7 +190,7 @@
     bottom: 0;
     background-image: var(--cover-overlay-gradient);
     opacity: 0.25;
-    z-index: 0;
+    z-index: var(--z-base);
   }
 
   .cover .title {
@@ -198,7 +198,7 @@
     white-space: normal;
     text-align: center;
     position: relative;
-    z-index: 1;
+    z-index: var(--z-content);
   }
 
   .cover span {
@@ -210,7 +210,7 @@
     border-radius: 0.3125rem;
     box-shadow: 0 0 0.3125rem 0.0625rem var(--grey-9-a6);
     background: var(--grey-9-a5);
-    z-index: 1;
+    z-index: var(--z-content);
   }
 
   .info {
@@ -413,7 +413,7 @@
     transform: translateZ(-2.5rem);
   }
 
-  @media (max-width: 820px) {
+  @media (max-width: 768px) {
     .item {
       width: calc(100% - 1rem) !important;
       min-width: calc(100% - 1rem) !important;

@@ -290,7 +290,7 @@
   background: var(--cover-overlay-gradient);
   opacity: 0.5;
   transition: all 0.3s ease;
-  z-index: -1;
+  z-index: var(--z-behind);
   top: 0;
   left: 0;
 }
@@ -742,7 +742,7 @@
   font-size: 80%;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 480px) {
   .article .md .anchor::before,
   .article .md .anchor::after {
     left: -0.625rem;
@@ -755,7 +755,7 @@
   line-height: 3;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 480px) {
   .article .md .anchor::after {
     left: -0.1875rem;
   }

@@ -295,7 +295,7 @@
   .search-shell {
     position: fixed;
     inset: 0;
-    z-index: 999;
+    z-index: var(--z-search-overlay);
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -329,7 +329,7 @@
 
   .pagefind-panel {
     position: relative;
-    z-index: 1;
+    z-index: var(--z-content);
     display: flex;
     min-height: min(32rem, calc(100vh - 6rem));
     max-height: calc(100vh - 6rem);
@@ -386,7 +386,7 @@
     position: absolute;
     right: 1rem;
     top: 1rem;
-    z-index: 2;
+    z-index: var(--z-elevated);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -644,7 +644,7 @@
     }
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 768px) {
     .search-shell {
       padding: 3.5rem 0.75rem 0.75rem;
     }

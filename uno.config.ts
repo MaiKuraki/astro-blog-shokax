@@ -3,38 +3,54 @@ import themeConfig from "./src/theme.config";
 import extractorSvelte from "@unocss/extractor-svelte";
 import { transformerDirectives } from "unocss";
 
-const iconSafeList = themeConfig.nav.flatMap((item) => {
+function normalizeIconName(icon: string): string {
+  return icon.startsWith("i-") ? icon : `i-ri-${icon}`;
+}
+
+function pushNormalizedIcon(target: string[], icon?: string) {
+  if (!icon) return;
+  target.push(normalizeIconName(icon));
+}
+
+function collectConfigIcons() {
   const icons: string[] = [];
-  if (item.icon) {
-    icons.push(item.icon);
-  }
-  if (item.dropbox?.items) {
-    item.dropbox.items.forEach((subItem) => {
-      if (subItem.icon) {
-        icons.push(subItem.icon);
-      }
+
+  themeConfig.nav.forEach((item) => {
+    pushNormalizedIcon(icons, item.icon);
+    item.dropbox?.items?.forEach((subItem) => {
+      pushNormalizedIcon(icons, subItem.icon);
+    });
+  });
+
+  if (themeConfig.sidebar?.social) {
+    Object.values(themeConfig.sidebar.social).forEach((value) => {
+      pushNormalizedIcon(icons, value.icon);
     });
   }
+
+  if (themeConfig.sidebar?.menu) {
+    Object.values(themeConfig.sidebar.menu).forEach((value) => {
+      pushNormalizedIcon(icons, value.icon);
+    });
+  }
+
+  // 预留：若未来在 friends.links 中引入 icon 字段，这里会自动纳入。
+  if (themeConfig.friends?.links) {
+    themeConfig.friends.links.forEach((link) => {
+      const icon = (link as { icon?: string }).icon;
+      pushNormalizedIcon(icons, icon);
+    });
+  }
+
   return icons;
-});
-
-if (themeConfig.sidebar?.social) {
-  Object.values(themeConfig.sidebar.social).forEach((value) => {
-    const iconStr = value.icon;
-    if (iconStr) {
-      iconSafeList.push(iconStr.startsWith("i-") ? iconStr : `i-ri-${iconStr}`);
-    }
-  });
 }
 
-if (themeConfig.sidebar?.menu) {
-  Object.values(themeConfig.sidebar.menu).forEach((value) => {
-    const iconStr = value.icon;
-    if (iconStr) {
-      iconSafeList.push(iconStr.startsWith("i-") ? iconStr : `i-ri-${iconStr}`);
-    }
-  });
-}
+const iconSafeList = [
+  ...collectConfigIcons(),
+  // 页面内固定使用的图标（避免后续模板改造期间被裁剪）
+  "i-ri-flag-line",
+  "i-ri-file-line",
+].map(normalizeIconName);
 
 export default defineConfig({
   presets: [presetWind4(), presetIcons(), presetAttributify()],

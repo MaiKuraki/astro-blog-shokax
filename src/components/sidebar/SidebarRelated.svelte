@@ -57,7 +57,7 @@
     border-radius: 100%;
     position: absolute;
     border: 0.1875rem solid var(--grey-1);
-    z-index: 1;
+    z-index: var(--z-content);
     transition: all 0.2s ease;
   }
 

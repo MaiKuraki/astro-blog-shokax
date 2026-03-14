@@ -340,7 +340,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: var(--codeblock-button-shadow);
-    z-index: 10;
+    z-index: var(--z-dropdown);
     animation: float 2s ease-in-out infinite;
     scale: 1.5;
   }
@@ -493,7 +493,7 @@
     width: 100vw;
     height: 100vh;
     margin: 0;
-    z-index: 9999;
+    z-index: var(--z-fullscreen);
     border-radius: 0;
     animation: fullscreenIn 0.3s ease-out;
     display: flex;
