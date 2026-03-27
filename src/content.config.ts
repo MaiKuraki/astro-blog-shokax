@@ -11,7 +11,7 @@ const posts = defineCollection({
     z.object({
       title: z.string(),
       description: z.string().optional(),
-      date: z.date().refine((date) => !Number.isNaN(date), {
+      date: z.date().refine((date) => !Number.isNaN(date.getTime()), {
         message: "Invalid date format",
       }),
       updated: z.date().optional(),
@@ -33,7 +33,7 @@ const posts = defineCollection({
         ])
         .optional(),
       // 加密相关字段
-      encrypted: z.boolean().optional().default(false),
+      encrypted: z.boolean().default(false),
       password: z.string().optional(), // 构建时用于加密，不会输出到前端
     }),
 });
@@ -46,7 +46,7 @@ const moments = defineCollection({
   }),
   schema: ({ image }) =>
     z.object({
-      date: z.date().refine((date) => !Number.isNaN(date), {
+      date: z.date().refine((date) => !Number.isNaN(date.getTime()), {
         message: "Invalid date format",
       }),
       images: z.array(z.union([z.string(), image()])).optional(),

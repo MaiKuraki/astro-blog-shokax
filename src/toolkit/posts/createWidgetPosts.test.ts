@@ -12,7 +12,7 @@ describe("createWidgetPosts", () => {
           encrypted: true,
           password: "test123",
         },
-      } as never,
+      },
     ]);
 
     expect(result).toEqual([
@@ -41,7 +41,7 @@ describe("createWidgetPosts", () => {
           title: "Plain Post",
           encrypted: false,
         },
-      } as never,
+      },
     ]);
 
     expect(result[0].data.description).toBe("x".repeat(300));
@@ -56,10 +56,28 @@ describe("createWidgetPosts", () => {
           title: "Encrypted No Desc",
           encrypted: true,
         },
-      } as never,
+      },
     ]);
 
     expect(result[0].data.description).toBe("");
     expect(result[0].data.description).not.toContain("top-secret-body");
+  });
+
+  it("should keep unicode character boundaries in body excerpt", () => {
+    const result = createWidgetPosts(
+      [
+        {
+          id: "unicode-post",
+          body: "😀你好世界",
+          data: {
+            title: "Unicode Post",
+            encrypted: false,
+          },
+        },
+      ],
+      1,
+    );
+
+    expect(result[0].data.description).toBe("😀");
   });
 });

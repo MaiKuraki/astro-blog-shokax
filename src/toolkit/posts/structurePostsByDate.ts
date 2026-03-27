@@ -25,7 +25,8 @@ export function structurePostsByDate(posts: Post[], config: ArchiveConfig = {}):
   posts.forEach((post) => {
     const date = post.data.date;
     const year = date.getFullYear();
-    const month = date.getMonth() + 1; // month starts from 0
+    // 归档结构约定：grouped[year][0] 为全年汇总，grouped[year][1..12] 为 1~12 月。
+    const month = date.getMonth() + 1;
     const day = date.getDate();
 
     if (!grouped[year]) {
