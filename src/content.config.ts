@@ -20,7 +20,6 @@ const posts = defineCollection({
       draft: z.boolean().optional(),
       cover: image().optional(),
       sticky: z.boolean().optional(),
-      link: z.string().optional(),
       license: z
         .enum([
           "CC-BY-4.0",

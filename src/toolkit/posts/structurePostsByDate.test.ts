@@ -56,18 +56,18 @@ describe("structurePostsByDate", () => {
     expect(Object.keys(result)).toContain("2023");
     expect(Object.keys(result)).toContain("2024");
 
-    expect(result[2023][0].length).toBe(3);
-    expect(result[2023][5].length).toBe(2);
-    expect(result[2023][6].length).toBe(1);
-    expect(result[2024][1].length).toBe(1);
+    expect(result[2023].yearlySummary.length).toBe(3);
+    expect(result[2023].monthlyData[5].posts.length).toBe(2);
+    expect(result[2023].monthlyData[6].posts.length).toBe(1);
+    expect(result[2024].monthlyData[1].posts.length).toBe(1);
   });
 
   it("should group posts by day if daily is enabled", () => {
     const result = structurePostsByDate(posts, { daily: true });
-    expect(result[2023][5].day).toBeDefined();
-    expect(result[2023][5].day![12].length).toBe(2);
-    expect(result[2023][6].day![1].length).toBe(1);
-    expect(result[2024][1].day![1].length).toBe(1);
+    expect(result[2023].monthlyData[5].dailyGroups).toBeDefined();
+    expect(result[2023].monthlyData[5].dailyGroups![12].length).toBe(2);
+    expect(result[2023].monthlyData[6].dailyGroups![1].length).toBe(1);
+    expect(result[2024].monthlyData[1].dailyGroups![1].length).toBe(1);
   });
 
   it("should return empty structure if posts is empty", () => {

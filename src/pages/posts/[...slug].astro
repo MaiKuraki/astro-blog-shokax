@@ -16,6 +16,7 @@ import type {
 import type { EncryptedData } from "@/toolkit/encryption/types";
 import { encryptContent } from "@/toolkit/encryption/crypto";
 import { createPostContentContainer } from "@/toolkit/posts/createPostContentContainer";
+import { toPostHref, toTagHref } from "@/toolkit/posts/url";
 import { wrapRenderedCodeBlocks } from "@/toolkit/wrapRenderedCodeBlocks";
 
 import "@/styles/post.css";
@@ -174,9 +175,9 @@ const toc: TocItem[] = isEncrypted
 
 // Build quick navigation
 const navigation: QuickNavigation = {
-  prevUrl: prevPost ? `/posts/${prevPost.slug}/` : undefined,
+  prevUrl: prevPost ? toPostHref(prevPost.slug) : undefined,
   prevTitle: prevPost?.title,
-  nextUrl: nextPost ? `/posts/${nextPost.slug}/` : undefined,
+  nextUrl: nextPost ? toPostHref(nextPost.slug) : undefined,
   nextTitle: nextPost?.title,
 };
 
@@ -290,7 +291,7 @@ if (!isEncrypted && hycEnable && aiRecommendEnable) {
 }
 
 // Current post path (trailing slash required by project routing)
-const postPath = `/posts/${post.id}/`;
+const postPath = toPostHref(post.id);
 
 // Build permalink
 const permalink = Astro.site
@@ -361,7 +362,6 @@ const postMeta = {
 
         <PostHeader
           title={post.data.title}
-          link={post.data.link}
           date={post.data.date}
           updated={post.data.updated}
           wordCount={wordCount}
@@ -397,7 +397,7 @@ const postMeta = {
               <div class="tags">
                 {post.data.tags.map((tag) => (
                   <a
-                    href={`/tags/${tag.toLowerCase().replace(/\s+/g, "-")}/`}
+                    href={toTagHref(tag)}
                     rel="tag"
                   >
                     <i class="icon i-ri-price-tag-3-line" />

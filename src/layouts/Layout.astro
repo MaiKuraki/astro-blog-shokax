@@ -26,6 +26,7 @@ import TwoColumnLayout from "@/layouts/TwoColumnLayout.astro";
 import ThreeColumnLayout from "@/layouts/ThreeColumnLayout.astro";
 import { generateTagCloud } from "@/toolkit/posts/generateTagCloud";
 import { createWidgetPosts } from "@/toolkit/posts/createWidgetPosts";
+import { toTagHref } from "@/toolkit/posts/url";
 import Footer from "@/components/footer/Footer.astro";
 
 // Accept sidebar props from child pages
@@ -94,7 +95,7 @@ const moments = shouldComputeRightSidebarRecentMoments
     )
   : [];
 const rightSidebarPosts = shouldComputeRightSidebarRandomPosts
-  ? posts.filter((post) => !post.data.encrypted && !post.data.link)
+  ? posts.filter((post) => !post.data.encrypted)
   : [];
 const rightSidebarTagCloud = shouldComputeRightSidebarTagCloud
   ? (() => {
@@ -120,7 +121,7 @@ const rightSidebarTagCloud = shouldComputeRightSidebarTagCloud
         },
       ).map((tag) => ({
         ...tag,
-        href: `/tags/${encodeURIComponent(tag.name.toLowerCase().replace(/\s+/g, "-"))}/`,
+        href: toTagHref(tag.name),
       }));
     })()
   : [];

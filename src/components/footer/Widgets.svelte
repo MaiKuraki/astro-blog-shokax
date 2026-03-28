@@ -2,6 +2,7 @@
   import { shuffle } from "es-toolkit";
   import { onMount } from "svelte";
   import { t } from "@/i18n";
+  import { toPostHref } from "@/toolkit/posts/url";
 
   interface Post {
     id: string;
@@ -147,12 +148,6 @@
     };
   });
 
-  function getPostSlug(post: Post): string {
-    // Generate slug from id or title
-    if (post.slug) return post.slug;
-    return post.id.toLowerCase().replace(/\s+/g, "-");
-  }
-
   function truncateText(text: string, maxLength: number = 50): string {
     if (text.length > maxLength) {
       return `${text.substring(0, maxLength)}...`;
@@ -174,7 +169,7 @@
             class="item border-grey-4 pb-2 pl-8 border-b border-dashed relative"
           >
             <a
-              href={`/posts/${getPostSlug(post)}/`}
+              href={toPostHref(post.slug || post.id)}
               class="hover:text-color-link text-inherit no-underline flex flex-col transition-colors"
             >
               <span class="breadcrumb text-sm font-semibold m-0 max-h-6"

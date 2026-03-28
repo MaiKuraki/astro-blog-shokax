@@ -2,6 +2,8 @@
 import Layout from "../../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import { structurePostsByDate } from "@/toolkit/posts/structurePostsByDate";
+import { buildArchiveTimeline } from "@/toolkit/posts/buildArchiveTimeline";
+import { toCategoryHref, toPostHref } from "@/toolkit/posts/url";
 import { fmtNum } from "@/toolkit/tools/fmtNum";
 import { t } from "@/i18n";
 import "../../../styles/collapse.css";
@@ -22,7 +24,7 @@ export async function getStaticPaths() {
     params: { year: String(year) },
     props: {
       year,
-      posts: structuredPosts[year][0],
+      posts: structuredPosts[year].yearlySummary,
       allYears: years.sort((a, b) => b - a),
     },
   }));
@@ -34,11 +36,6 @@ const { year, posts } = Astro.props as {
   year: number;
   posts: CollectionEntry<"posts">[];
 };
-
-// Helper to get category URL
-function getCategoryUrl(category: string): string {
-  return `/categories/${encodeURIComponent(category)}`;
-}
 
 // Helper to format date
 function formatDate(date: Date): string {
@@ -59,29 +56,15 @@ function formatDate(date: Date): string {
       </h2>
 
       {
-        (() => {
-          let lastMonth = 0;
-          let monthPostCount = 0;
-
-          return posts.map((post, index) => {
+        buildArchiveTimeline(posts).map(
+          ({ post, month, showMonthSection, monthPostCount }) => {
             const postDate = post.data.date;
-            const month = postDate.getMonth() + 1;
-            const isNewMonth = month !== lastMonth;
-
-            // Count posts in this month
-            if (isNewMonth) {
-              monthPostCount = posts.filter(
-                (p) => p.data.date.getMonth() + 1 === month,
-              ).length;
-              lastMonth = month;
-            }
-
-            const prevPost = index > 0 ? posts[index - 1] : null;
-            const prevMonth = prevPost ? prevPost.data.date.getMonth() + 1 : 0;
+            const lastCategory =
+              post.data.categories?.[post.data.categories.length - 1];
 
             return (
               <>
-                {(index === 0 || month !== prevMonth) && (
+                {showMonthSection && (
                   <h3 class="item section">
                     <a href={`/archives/${year}/${fmtNum(month)}/`}>
                       {month} 月
@@ -104,47 +87,26 @@ function formatDate(date: Date): string {
                     </time>
                   </div>
 
-                  {post.data.categories && post.data.categories.length > 0 && (
+                  {lastCategory && (
                     <div class="meta">
-                      {post.data.categories.map((cat, catIndex) => (
-                        <>
-                          {catIndex === post.data.categories!.length - 1 && (
-                            <span>
-                              <a href={getCategoryUrl(cat)}>{cat}</a>
-                            </span>
-                          )}
-                        </>
-                      ))}
+                      <span>
+                        <a href={toCategoryHref(lastCategory)}>{lastCategory}</a>
+                      </span>
                     </div>
                   )}
 
                   <div class="title">
-                    {post.data.link ? (
-                      <a
-                        href={post.data.link}
-                        class="external"
-                        itemprop="url"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <span itemprop="name">
-                          {post.data.title || post.data.link}
-                        </span>
-                        <i class="i-ri-external-link-line" />
-                      </a>
-                    ) : (
-                      <a href={`/posts/${post.id}/`} itemprop="url">
-                        <span itemprop="name">
-                          {post.data.title || t("post.noContent")}
-                        </span>
-                      </a>
-                    )}
+                    <a href={toPostHref(post.id)} itemprop="url">
+                      <span itemprop="name">
+                        {post.data.title || t("post.noContent")}
+                      </span>
+                    </a>
                   </div>
                 </article>
               </>
             );
-          });
-        })()
+          },
+        )
       }
     </div>
   </div>

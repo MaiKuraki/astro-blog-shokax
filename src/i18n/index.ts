@@ -1,12 +1,13 @@
 import i18next from "i18next";
 import themeConfig from "@/theme.config";
+import { resolveLocale, type ResolvedLocale } from "@/toolkit/i18n/resolveLocale";
 
 // Import translation files
 import zhCN from "./locales/zh-CN.json";
 import en from "./locales/en.json";
 
 // Type for supported locales
-export type Locale = "zh-CN" | "en";
+export type Locale = ResolvedLocale;
 
 // Resources type
 const resources = {
@@ -15,7 +16,7 @@ const resources = {
 } as const;
 
 // Get current locale from theme config
-const currentLocale = (themeConfig.locale as Locale) || "zh-CN";
+const currentLocale = resolveLocale(themeConfig.locale);
 
 /**
  * Initialize i18n with the locale from theme config
@@ -60,7 +61,7 @@ export function getT(locale: Locale = "zh-CN") {
  * Helper to get locale from theme config
  */
 export function getLocaleFromConfig(config: typeof themeConfig): Locale {
-  return (config.locale as Locale) || "zh-CN";
+  return resolveLocale(config.locale);
 }
 
 /**

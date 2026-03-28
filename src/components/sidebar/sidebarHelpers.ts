@@ -3,6 +3,7 @@
  */
 
 import type { TocItem } from "./SidebarTypes";
+import { isSidebarMenuItemActive } from "@/toolkit/ui/sidebar";
 
 /**
  * Activate menu items based on current page URL
@@ -16,13 +17,12 @@ export function initMenuActive() {
 
     if (!target) return;
 
-    const isSamePath =
-      target.pathname === location.pathname ||
-      target.pathname === location.pathname.replace("index.html", "");
-
-    const isSubPath = location.pathname.startsWith(target.pathname) && target.pathname !== "/";
-
-    const isActive = target.hostname === location.hostname && (isSamePath || isSubPath);
+    const isActive = isSidebarMenuItemActive({
+      targetPathname: target.pathname,
+      currentPathname: location.pathname,
+      targetHostname: target.hostname,
+      currentHostname: location.hostname,
+    });
 
     element.classList.toggle("active", isActive);
 
