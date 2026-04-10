@@ -9,7 +9,7 @@
     "build": "bun run build:site && bun run build:index",
     "preview": "bunx --bun astro preview",
     "astro": "bunx --bun astro",
-    "check": "bunx --bun astro check --root .",
+    "check": "bunx --bun astro check --root . && bunx --bun svelte-check",
     "lint": "bunx --bun oxlint --type-aware --type-check . --fix",
     "format": "bunx oxfmt .",
     "test": "bun run test:unit",
