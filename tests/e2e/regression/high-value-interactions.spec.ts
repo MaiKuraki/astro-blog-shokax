@@ -42,14 +42,14 @@ test("@critical 搜索命中后可点击结果跳转到对应文章", async ({ p
   await page.getByRole("button", { name: "Search" }).click();
 
   const searchDialog = page.getByRole("dialog", { name: "Search" });
-  const searchInput = page.locator(".pagefind-ui__search-input");
+  const searchInput = page.locator("pagefind-input input");
   await expect(searchDialog).toBeVisible();
   await expect(searchInput).toBeVisible();
 
   await searchInput.fill(SEARCH_TERMS.publicPostTitle);
 
   const firstResult = page
-    .locator(".pagefind-ui__result-link", {
+    .locator("pagefind-results a", {
       hasText: SEARCH_TERMS.publicPostTitle,
     })
     .first();
