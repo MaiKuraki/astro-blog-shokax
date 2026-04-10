@@ -87,7 +87,7 @@
 
   let viewport = $state<HTMLDivElement | null>(null);
   let messages = $state<ChatMessage[]>([]);
-  let currentNodeId = $state(startId);
+  let currentNodeId = $state("");
   let isTyping = $state(false);
 
   const nodeMap = $derived(new Map(nodes.map((node) => [node.id, node])));
@@ -164,6 +164,12 @@
 
   onMount(() => {
     initializeConversation();
+  });
+
+  $effect(() => {
+    if (currentNodeId === "") {
+      currentNodeId = startId;
+    }
   });
 </script>
 
