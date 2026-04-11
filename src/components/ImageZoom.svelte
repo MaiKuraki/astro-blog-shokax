@@ -2,6 +2,7 @@
 
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
+  import { lockBodyScroll } from "@/toolkit/ui/scrollLock";
 
   let container = $state<HTMLElement | null>(null);
   let dialogElement = $state<HTMLDialogElement | null>(null);
@@ -16,10 +17,11 @@
 
   const CLOSE_ANIMATION_MS = 220;
 
+  let releaseBodyScrollLock: (() => void) | null = null;
+
   const restoreBodyScroll = () => {
-    if (typeof document !== "undefined") {
-      document.body.style.overflow = "";
-    }
+    releaseBodyScrollLock?.();
+    releaseBodyScrollLock = null;
   };
 
   const finalizeClosePreview = () => {
@@ -81,8 +83,11 @@
     previewAlt = image.alt || "";
     isOpen = true;
 
-    if (typeof document !== "undefined") {
-      document.body.style.overflow = "hidden";
+    if (typeof document !== "undefined" && typeof window !== "undefined" && !releaseBodyScrollLock) {
+      releaseBodyScrollLock = lockBodyScroll(document, {
+        innerWidth: window.innerWidth,
+        getComputedPaddingInlineEnd: () => window.getComputedStyle(document.body).paddingInlineEnd,
+      });
     }
   };
 
