@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { POSTS, ROUTES } from "../support/routes";
+import { ROUTES } from "../support/routes";
 
 async function measureMainOffset(page: import("@playwright/test").Page) {
   return page.evaluate(() => {
