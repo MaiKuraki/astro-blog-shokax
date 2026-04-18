@@ -2,6 +2,10 @@
 import { currentLocale, getT } from "@/i18n";
 import type { CollectionEntry } from "astro:content";
 import { sample } from "es-toolkit/array";
+import {
+  normalizeRightSidebarCardOrder,
+  truncateRightSidebarText,
+} from "@/toolkit/ui/rightSidebar";
 import SidebarCalendarPlaceholder from "./SidebarCalendarPlaceholder.astro";
 import AnnouncementContent from "@/content/announcement.md";
 
@@ -50,25 +54,7 @@ const showRandomPosts = config.randomPosts === true;
 const showTagCloud = config.tagCloud === true;
 const showAnnouncement = config.announcement === true;
 
-const defaultCardOrder = [
-  "announcement",
-  "search",
-  "calendar",
-  "recentMoments",
-  "randomPosts",
-  "tagCloud",
-] as const;
-type RightSidebarCardKey = (typeof defaultCardOrder)[number];
-
-const configuredCardOrder = Array.isArray(config.order) ? config.order : [];
-const normalizedCardOrder = [
-  ...configuredCardOrder.filter(
-    (key, index, array) =>
-      defaultCardOrder.includes(key as RightSidebarCardKey) &&
-      array.indexOf(key) === index,
-  ),
-  ...defaultCardOrder.filter((key) => !configuredCardOrder.includes(key)),
-];
+const normalizedCardOrder = normalizeRightSidebarCardOrder(config.order);
 
 const latestMoments = moments.slice(0, 1).map((moment) => ({
   id: moment.id,
@@ -98,14 +84,6 @@ function formatMomentDate(date: Date): string {
     month: "2-digit",
     day: "2-digit",
   });
-}
-
-function truncateText(text: string, maxLength: number) {
-  if (text.length <= maxLength) {
-    return text;
-  }
-
-  return `${text.slice(0, maxLength)}...`;
 }
 
 const hasSearchContent = showSearch;
@@ -203,7 +181,7 @@ const hasRenderedContent =
                         {formatMomentDate(moment.date)}
                       </span>
                       <span class="extra-list__title">
-                        {truncateText(
+                        {truncateRightSidebarText(
                           moment.excerpt || t("moments.noContent"),
                           38,
                         )}
@@ -234,10 +212,10 @@ const hasRenderedContent =
                   <li class="extra-list__item">
                     <a href={post.href} class="extra-list__link">
                       <span class="extra-list__title">
-                        {truncateText(post.title, 26)}
+                        {truncateRightSidebarText(post.title, 26)}
                       </span>
                       <span class="extra-list__desc">
-                        {truncateText(post.description, 42)}
+                        {truncateRightSidebarText(post.description, 42)}
                       </span>
                     </a>
                   </li>
