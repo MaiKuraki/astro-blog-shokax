@@ -312,107 +312,9 @@ const hasRenderedContent =
       previous.cleanup();
     }
 
-    const roots = Array.from(document.querySelectorAll("[data-extra-sidebar]"));
     const searchTriggers = Array.from(
       document.querySelectorAll("[data-open-global-search]"),
     );
-    const rootEntries = roots
-      .map((root) => {
-        const inner = root.querySelector(".layout-extra-column__inner");
-
-        if (!(inner instanceof HTMLElement)) {
-          return null;
-        }
-
-        return { root, inner };
-      })
-      .filter((entry) => entry !== null);
-
-    if (roots.length === 0) {
-      return;
-    }
-
-    const headerElements = [
-      document.querySelector("#imgs"),
-      document.querySelector("#nav"),
-      document.querySelector("#waves"),
-    ].filter((element) => element instanceof HTMLElement);
-
-    const computeHeaderHeight = () => {
-      let headerHeight = 0;
-
-      headerElements.forEach((element) => {
-        headerHeight += element.offsetHeight;
-      });
-
-      return headerHeight;
-    };
-
-    let cachedHeaderHeight = computeHeaderHeight();
-    let frameId = 0;
-
-    const sync = () => {
-      frameId = 0;
-
-      const shouldAffix =
-        window.scrollY > cachedHeaderHeight - 260 && window.innerWidth >= 1440;
-
-      rootEntries.forEach(({ root, inner }) => {
-        root.classList.toggle("affix", shouldAffix);
-
-        if (!shouldAffix) {
-          if (root.style.minHeight) {
-            root.style.minHeight = "";
-          }
-
-          return;
-        }
-
-        const nextMinHeight = `${inner.offsetHeight}px`;
-        if (root.style.minHeight !== nextMinHeight) {
-          root.style.minHeight = nextMinHeight;
-        }
-      });
-    };
-
-    const scheduleSync = () => {
-      if (frameId !== 0) {
-        return;
-      }
-
-      frameId = window.requestAnimationFrame(sync);
-    };
-
-    const refreshHeaderHeight = () => {
-      cachedHeaderHeight = computeHeaderHeight();
-      scheduleSync();
-    };
-
-    const resizeObserver =
-      typeof ResizeObserver === "function"
-        ? new ResizeObserver((entries) => {
-            const shouldRefreshHeaderHeight = entries.some((entry) =>
-              headerElements.includes(entry.target),
-            );
-
-            if (shouldRefreshHeaderHeight) {
-              refreshHeaderHeight();
-              return;
-            }
-
-            scheduleSync();
-          })
-        : undefined;
-
-    headerElements.forEach((element) => {
-      resizeObserver?.observe(element);
-    });
-    rootEntries.forEach(({ inner }) => {
-      resizeObserver?.observe(inner);
-    });
-
-    const onScroll = () => scheduleSync();
-    const onResize = () => refreshHeaderHeight();
     const onSearchOpen = () => {
       const searchButton = document.querySelector("#search");
 
@@ -421,22 +323,12 @@ const hasRenderedContent =
       }
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onResize, { passive: true });
     searchTriggers.forEach((trigger) => {
       trigger.addEventListener("click", onSearchOpen);
     });
-    scheduleSync();
 
     window[registryKey] = {
       cleanup() {
-        if (frameId !== 0) {
-          window.cancelAnimationFrame(frameId);
-        }
-
-        window.removeEventListener("scroll", onScroll);
-        window.removeEventListener("resize", onResize);
-        resizeObserver?.disconnect();
         searchTriggers.forEach((trigger) => {
           trigger.removeEventListener("click", onSearchOpen);
         });
@@ -446,6 +338,10 @@ const hasRenderedContent =
 </script>
 
 <style>
+  .layout-extra-column {
+    position: relative;
+  }
+
   .layout-extra-column__inner {
     display: grid;
     gap: 1rem;
@@ -504,7 +400,8 @@ const hasRenderedContent =
   .extra-empty-card__icon {
     align-items: center;
     background: color-mix(in srgb, var(--color-pink) 10%, var(--grey-1));
-    border: 0.0625rem solid color-mix(in srgb, var(--color-pink) 18%, var(--grey-3));
+    border: 0.0625rem solid
+      color-mix(in srgb, var(--color-pink) 18%, var(--grey-3));
     border-radius: 999px;
     color: var(--color-pink);
     display: inline-flex;
@@ -569,7 +466,8 @@ const hasRenderedContent =
     z-index: var(--z-content);
     align-items: center;
     background: var(--grey-0);
-    border: 0.0625rem solid color-mix(in srgb, var(--color-pink) 14%, var(--grey-3));
+    border: 0.0625rem solid
+      color-mix(in srgb, var(--color-pink) 14%, var(--grey-3));
     border-radius: 0.75rem;
     color: var(--grey-7);
     cursor: pointer;
@@ -717,5 +615,29 @@ const hasRenderedContent =
 
   :global(:root[data-theme="dark"]) .extra-list__title {
     color: var(--grey-7);
+  }
+
+  @media (min-width: 1440px) {
+    .layout-extra-column {
+      isolation: isolate;
+    }
+
+    .layout-extra-column__inner {
+      -webkit-mask-image: linear-gradient(
+        180deg,
+        transparent 0,
+        #000 1.75rem,
+        #000 calc(100% - 1.75rem),
+        transparent 100%
+      );
+      mask-image: linear-gradient(
+        180deg,
+        transparent 0,
+        #000 1.75rem,
+        #000 calc(100% - 1.75rem),
+        transparent 100%
+      );
+      mask-mode: alpha;
+    }
   }
 </style>
